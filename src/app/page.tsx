@@ -1,16 +1,17 @@
-import { Layout } from '@/components/Layout';
-import { HeroSection } from '@/components/sections/HeroSection';
-import { FeaturesSection } from '@/components/sections/FeaturesSection';
-import { PartnersSection } from '@/components/sections/PartnersSection';
-import { FAQSection } from '@/components/sections/FAQSection';
+import { HeroSection, ProcessSection, FeaturesSection, FAQSection, PartnersSection } from '@/components/sections';
+import { Footer } from '@/components/layout/Footer';
+import { Navigation } from '@/components/layout/Navigation';
 
 export default function Home() {
   return (
-    <Layout>
+    <main>
+      <Navigation />
       <HeroSection />
+      <ProcessSection />
       <FeaturesSection />
-      <PartnersSection />
       <FAQSection />
-    </Layout>
+      <PartnersSection />
+      <Footer />
+    </main>
   );
 }

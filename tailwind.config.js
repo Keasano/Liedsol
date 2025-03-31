@@ -29,6 +29,8 @@ module.exports = {
         float: 'float 6s ease-in-out infinite',
         'float-reverse': 'float-reverse 6s ease-in-out infinite',
         'infinite-scroll': 'infinite-scroll 20s linear infinite',
+        'spin-left': 'spin-left 40s linear infinite',
+        'spin-right': 'spin-right 40s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -47,6 +49,25 @@ module.exports = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-33.33%)' },
         },
+        'spin-left': {
+          from: {
+            transform: 'translate(-50%, -50%) rotate(0deg)',
+          },
+          to: {
+            transform: 'translate(-50%, -50%) rotate(360deg)',
+          },
+        },
+        'spin-right': {
+          from: {
+            transform: 'translate(50%, -50%) rotate(0deg)',
+          },
+          to: {
+            transform: 'translate(50%, -50%) rotate(-360deg)',
+          },
+        },
+      },
+      fontFamily: {
+        'power-grotesk': ['PowerGrotesk', 'sans-serif'],
       },
     },
   },

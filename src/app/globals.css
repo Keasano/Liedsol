@@ -4,6 +4,14 @@
 
 @font-face {
   font-family: 'PowerGrotesk';
+  src: url('/fonts/PowerGroteskTrial-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PowerGrotesk';
   src: url('/fonts/PowerGroteskTrial-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
@@ -28,9 +36,9 @@
 
 @font-face {
   font-family: 'PowerGrotesk';
-  src: url('/fonts/PowerGroteskTrial-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
+  src: url('/fonts/PowerGroteskTrial-UltBdIta.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -138,28 +146,37 @@ html {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
-@keyframes scroll {
+@keyframes slide {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-50% - 2rem));
+    transform: translateX(-100%);
   }
 }
 
-.animate-scroll {
-  animation: scroll 30s linear infinite;
+.partners-track {
+  animation: slide 40s linear infinite;
 }
 
-@keyframes infinite-scroll {
+.partner-item {
+  flex: 0 0 auto;
+}
+
+.partners-group {
+  flex: 0 0 auto;
+}
+
+@keyframes slow-spin {
   from {
-    transform: translateX(0);
+    transform: rotate(0deg);
   }
   to {
-    transform: translateX(-33.33%);
+    transform: rotate(360deg);
   }
 }
 
-.animate-infinite-scroll {
-  animation: infinite-scroll 20s linear infinite;
+.animate-slow-spin {
+  animation: slow-spin 20s linear infinite;
 }
+
