@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 防止滚动条出现时页面偏移 */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* 确保模态框打开时页面不会偏移 */
+body {
+  padding-right: 0 !important;
+  overflow-y: scroll !important;
+}
+
 @font-face {
   font-family: 'PowerGrotesk';
   src: url('/fonts/PowerGroteskTrial-Light.ttf') format('truetype');
@@ -43,14 +54,28 @@
 }
 
 :root {
-  --foreground-rgb: 33, 33, 33;
-  --background-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
   font-family: 'PowerGrotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
 
 html {
@@ -178,5 +203,23 @@ html {
 
 .animate-slow-spin {
   animation: slow-spin 20s linear infinite;
+}
+
+/* Hide Family Button */
+[class*="ck-family-button"],
+[class*="ck-connect-family"],
+[class*="ck-family-badge"] {
+  display: none !important;
+}
+
+/* Hide Family Text */
+[class*="ck-tt-family"],
+[class*="ck-family-text"] {
+  display: none !important;
+}
+
+/* Hide or below text */
+.ck-tt-separator {
+  display: none !important;
 }
 
