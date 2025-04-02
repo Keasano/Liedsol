@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import { AnimatedText } from '../ui/AnimatedText';
 
 const features = [
   {
@@ -25,12 +25,13 @@ const features = [
 
 export const FeaturesSection = () => {
   return (
-    <section className="w-full bg-[#121212] py-[200px]">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-3 gap-6">
+    <section className="w-full bg-[#121212] py-[150px]">
+      <div className="max-w-[1200px] mx-auto px-4">
+        <div className="grid grid-cols-3 gap-4">
           {features.map((feature, index) => (
-            <div 
+            <AnimatedText 
               key={index} 
+              threshold={0.3}
               className="bg-[#202120] rounded-[32px] p-8 flex flex-col"
             >
               <img
@@ -47,7 +48,7 @@ export const FeaturesSection = () => {
               <p className="text-[#929796] text-base font-normal">
                 {feature.description}
               </p>
-            </div>
+            </AnimatedText>
           ))}
         </div>
       </div>

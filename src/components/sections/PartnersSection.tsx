@@ -11,7 +11,7 @@ const partners = [
 
 export const PartnersSection = () => {
   return (
-    <section className="pt-[200px] pb-[200px] overflow-hidden relative">
+    <section className="pt-[150px] pb-[150px] overflow-hidden relative">
       {/* Title */}
       <h2 className="text-center text-[#929796] text-[14px] mb-16">
         Trusted partner to top institutions & industry leaders.

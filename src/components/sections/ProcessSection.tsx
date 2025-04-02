@@ -71,7 +71,7 @@ export const ProcessSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-[#F7F7F7] font-power-grotesk relative">
+    <section ref={sectionRef} className="py-[150px] bg-[#F7F7F7] font-power-grotesk relative">
       <div className="max-w-[1200px] mx-auto px-4 overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:gap-20 gap-10">
           {/* Left content */}
@@ -88,8 +88,8 @@ export const ProcessSection = () => {
               <Image 
                 src="/images/feature-swirl.png"
                 alt="Decorative swirl"
-                width={240}
-                height={240}
+                width={264}
+                height={264}
                 className="mt-8 animate-float"
               />
             </div>
