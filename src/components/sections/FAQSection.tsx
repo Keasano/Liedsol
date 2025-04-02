@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { XMarkIcon as XIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { AnimatedText } from '../ui/AnimatedText';
 
 interface FAQItemProps {
   number: number;
@@ -93,27 +94,58 @@ const faqs = [
 
 export const FAQSection = () => {
   const [openFaq, setOpenFaq] = useState('01');
+  const [showFaqs, setShowFaqs] = useState(false);
+  const titleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowFaqs(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (titleRef.current) {
+      observer.observe(titleRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="pt-[150px]">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <div ref={titleRef} className="text-center mb-12">
           <p className="text-[#636161] text-[14px] font-normal mb-4">FAQs</p>
           <h2 className="text-4xl font-bold text-[#212121]">
             Frequently Asked Questions
           </h2>
         </div>
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq) => (
-            <FAQItem
-              key={faq.id}
-              number={Number(faq.id)}
-              question={faq.question}
-              answer={faq.answer}
-              isOpen={openFaq === faq.id}
-              onClick={() => setOpenFaq(openFaq === faq.id ? '' : faq.id)}
-            />
-          ))}
+        <div className="max-w-3xl mx-auto">
+          <div className="flex flex-col gap-6">
+            {faqs.map((faq, index) => (
+              <div
+                key={faq.question}
+                className="opacity-0 transition-all duration-300 ease-out"
+                style={{ 
+                  opacity: showFaqs ? 1 : 0,
+                  transform: showFaqs ? 'translateY(0)' : 'translateY(20px)',
+                  transitionDelay: `${index * 200}ms`,
+                }}
+              >
+                <FAQItem
+                  number={Number(faq.id)}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={openFaq === faq.id}
+                  onClick={() => setOpenFaq(openFaq === faq.id ? '' : faq.id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

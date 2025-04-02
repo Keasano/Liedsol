@@ -31,8 +31,10 @@ export const FeaturesSection = () => {
           {features.map((feature, index) => (
             <AnimatedText 
               key={index} 
-              threshold={0.3}
-              className="bg-[#202120] rounded-[32px] p-8 flex flex-col"
+              threshold={0.1}
+              className={`bg-[#202120] rounded-[32px] p-8 flex flex-col`}
+              delay={index * 200}
+              animationClass="animate-fade-up-parallax"
             >
               <img
                 src={feature.icon}

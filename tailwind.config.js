@@ -25,58 +25,69 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       animation: {
-        'fade-up': 'fade-up 0.6s ease-out forwards',
-        'spin-left': 'spin-left 40s linear infinite',
-        'spin-right': 'spin-right 40s linear infinite'
+        'fade-up': 'fadeUp 0.6s ease-out forwards',
+        'fade-up-parallax': 'fadeUpParallax 1s cubic-bezier(0.23, 1, 0.32, 1) forwards',
+        'float': 'float 3s ease-in-out infinite',
+        'spin-left': 'spinLeft 20s linear infinite',
+        'spin-right': 'spinRight 20s linear infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        fadeUp: {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(40px)'
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
+        },
+        fadeUpParallax: {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(100px)'
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(0)'
+          },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
         },
-        'float-reverse': {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(20px)' },
+        spinLeft: {
+          '0%': { transform: 'translate(-50%, -50%) rotate(0deg)' },
+          '100%': { transform: 'translate(-50%, -50%) rotate(-360deg)' },
         },
-        'infinite-scroll': {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-33.33%)' },
+        spinRight: {
+          '0%': { transform: 'translateY(-50%) rotate(0deg)' },
+          '100%': { transform: 'translateY(-50%) rotate(360deg)' },
         },
-        'spin-left': {
-          from: {
-            transform: 'translate(-50%, -50%) rotate(0deg)',
-          },
-          to: {
-            transform: 'translate(-50%, -50%) rotate(360deg)',
-          },
-        },
-        'spin-right': {
-          from: {
-            transform: 'translate(50%, -50%) rotate(0deg)',
-          },
-          to: {
-            transform: 'translate(50%, -50%) rotate(-360deg)',
-          },
-        },
-        'fade-up': {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(40px)'
-          },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)'
-          }
-        }
+      },
+      animationDelay: {
+        '0': '0ms',
+        '100': '100ms',
+        '200': '200ms',
+        '300': '300ms',
+        '400': '400ms',
+        '500': '500ms',
+        '600': '600ms',
+        '700': '700ms',
       },
       fontFamily: {
         'power-grotesk': ['PowerGrotesk', 'sans-serif'],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities, theme }) {
+      const animationDelays = theme('animationDelay');
+      const utilities = Object.entries(animationDelays).reduce((acc, [key, value]) => {
+        acc[`.animate-delay-${key}`] = { animationDelay: value };
+        return acc;
+      }, {});
+      addUtilities(utilities);
+    },
+  ],
 }; 

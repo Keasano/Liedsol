@@ -7,28 +7,37 @@ interface AnimatedTextProps {
   className?: string;
   threshold?: number;
   initial?: boolean;
+  delay?: number;
+  animationClass?: string;
 }
 
-export const AnimatedText = ({ 
-  children, 
-  className = '', 
+export const AnimatedText = ({
+  children,
+  className = '',
   threshold = 0.3,
-  initial = false
+  initial = false,
+  delay = 0,
+  animationClass = 'animate-fade-up'
 }: AnimatedTextProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(initial);
 
   useEffect(() => {
     if (initial) {
-      setIsVisible(true);
-      return;
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, delay);
+      return () => clearTimeout(timer);
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          const timer = setTimeout(() => {
+            setIsVisible(true);
+          }, delay);
           observer.unobserve(entry.target);
+          return () => clearTimeout(timer);
         }
       },
       {
@@ -46,14 +55,12 @@ export const AnimatedText = ({
         observer.unobserve(elementRef.current);
       }
     };
-  }, [threshold, initial]);
+  }, [threshold, initial, delay]);
 
   return (
     <div
       ref={elementRef}
-      className={`${className} transition-opacity duration-600 ${
-        isVisible ? 'animate-fade-up' : 'opacity-0'
-      }`}
+      className={`${className} ${isVisible ? animationClass : 'opacity-0'}`}
     >
       {children}
     </div>

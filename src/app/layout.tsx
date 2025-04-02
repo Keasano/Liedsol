@@ -19,6 +19,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if (typeof window !== 'undefined') {
+              window.history.scrollRestoration = 'manual';
+              window.scrollTo(0, 0);
+            }
+          `
+        }} />
+      </head>
       <body className={`${inter.className} min-h-screen bg-white font-power-grotesk overflow-x-hidden`}>
         {children}
       </body>
