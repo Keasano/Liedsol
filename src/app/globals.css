@@ -51,10 +51,14 @@ body {
   font-family: 'PowerGrotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  width: 100%;
+  overflow-x: hidden;
 }
 
 html {
   scroll-behavior: smooth;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 @layer base {
@@ -193,5 +197,23 @@ html {
 
 .animate-fade-up {
   animation: fade-up 0.6s ease-out forwards;
+}
+
+/* 防止页面偏移 */
+html {
+  scroll-behavior: smooth;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/* 移除 ConnectKit 的自动 padding */
+body.ck-overlay-open {
+  padding-right: 0 !important;
+  overflow: hidden !important;
+}
+
+/* 确保弹窗内容可以滚动 */
+.ck-modal-open {
+  overflow: auto !important;
 }
 
