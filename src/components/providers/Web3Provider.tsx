@@ -1,10 +1,11 @@
 'use client';
 
-import { WagmiConfig, createConfig } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
+import { createConfig, WagmiConfig } from 'wagmi';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { mainnet } from 'wagmi/chains';
 
+// 创建一个静态的 QueryClient 实例
 const queryClient = new QueryClient();
 
 // 使用 ConnectKit 的默认配置

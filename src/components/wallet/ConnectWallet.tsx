@@ -5,7 +5,7 @@ import { ConnectKitButton } from 'connectkit';
 export function ConnectWallet() {
   return (
     <ConnectKitButton.Custom>
-      {({ isConnected, show, address, ensName, chain }) => {
+      {({ isConnected, show, address, ensName }) => {
         return (
           <button
             onClick={show}
