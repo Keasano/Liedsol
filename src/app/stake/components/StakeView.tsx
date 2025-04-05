@@ -74,7 +74,7 @@ export function StakeView() {
               <span className="text-xl text-[#212121]">{topToken.symbol}</span>
             </div>
             <div className="text-right">
-              <div className="text-[28px] leading-none text-[#929796]">0.00</div>
+              <div className="text-[26px] leading-none text-[#929796] font-bold">0.00</div>
               <div className="text-sm text-[#929796] mt-1">$0</div>
             </div>
           </div>
@@ -116,7 +116,7 @@ export function StakeView() {
               <span className="text-xl text-[#212121]">{bottomToken.symbol}</span>
             </div>
             <div className="text-right">
-              <div className="text-[28px] leading-none text-[#929796]">0.00</div>
+              <div className="text-[26px] leading-none text-[#929796] font-bold">0.00</div>
               <div className="text-sm text-[#929796] mt-1">$0</div>
             </div>
           </div>
