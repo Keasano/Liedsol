@@ -6,14 +6,37 @@ import Image from 'next/image';
 export function StakeView() {
   const [activeTab, setActiveTab] = useState<'stake' | 'unstake'>('stake');
 
+  const handleSwitchClick = () => {
+    setActiveTab(activeTab === 'stake' ? 'unstake' : 'stake');
+  };
+
+  // 定义代币数据
+  const topToken = activeTab === 'stake' ? {
+    label: 'Stake',
+    icon: '/stake/assets/tokens/sol.svg',
+    symbol: 'SOL'
+  } : {
+    label: 'Unstake',
+    icon: '/stake/assets/tokens/lsol.svg',
+    symbol: 'LSOL'
+  };
+
+  const bottomToken = activeTab === 'stake' ? {
+    icon: '/stake/assets/tokens/lsol.svg',
+    symbol: 'LSOL'
+  } : {
+    icon: '/stake/assets/tokens/sol.svg',
+    symbol: 'SOL'
+  };
+
   return (
     <div className="w-full max-w-[480px] mx-auto">
       {/* 标签切换 */}
       <div className="flex p-[5px] bg-[#F7F8F5] rounded-full relative mb-6">
         {/* 滑动背景 */}
         <div
-          className={`absolute inset-y-[5px] w-[calc(50%-5px)] bg-white rounded-full transition-transform duration-300 ease-in-out shadow-[0_2px_4px_rgba(0,0,0,0.06)] ${
-            activeTab === 'stake' ? 'left-[5px]' : 'translate-x-[calc(100%+5px)]'
+          className={`absolute top-[5px] bottom-[5px] w-[calc(50%-10px)] bg-white rounded-full transition-all duration-300 ease-in-out shadow-[0_2px_4px_rgba(0,0,0,0.06)] ${
+            activeTab === 'stake' ? 'left-[5px]' : 'left-[calc(50%+5px)]'
           }`}
         />
         
@@ -37,18 +60,18 @@ export function StakeView() {
 
       {/* 主要内容区域 */}
       <div className="bg-[#F7F8F5] rounded-3xl p-6 h-[266px] flex flex-col justify-between mb-4">
-        {/* SOL 输入区域 */}
+        {/* 顶部代币输入区域 */}
         <div>
-          <div className="text-sm text-[#929796] mb-3 font-normal">Stake</div>
+          <div className="text-sm text-[#929796] mb-3 font-normal">{topToken.label}</div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Image
-                src="/stake/assets/tokens/sol.svg"
-                alt="SOL"
+                src={topToken.icon}
+                alt={topToken.symbol}
                 width={32}
                 height={32}
               />
-              <span className="text-xl text-[#212121]">SOL</span>
+              <span className="text-xl text-[#212121]">{topToken.symbol}</span>
             </div>
             <div className="text-right">
               <div className="text-[28px] leading-none text-[#929796]">0.00</div>
@@ -63,31 +86,34 @@ export function StakeView() {
           <div className="flex-1 h-px bg-[#ECEDEA]" />
           
           {/* 转换图标 */}
-          <div className="mx-[18px]">
+          <button 
+            onClick={handleSwitchClick}
+            className="mx-[18px] hover:opacity-80 transition-opacity"
+          >
             <Image
               src="/stake/assets/tokens/switch-arrow.svg"
-              alt=""
+              alt="Switch"
               width={56}
               height={56}
             />
-          </div>
+          </button>
           
           {/* 右侧分割线 */}
           <div className="flex-1 h-px bg-[#ECEDEA]" />
         </div>
 
-        {/* LSOL 输入区域 */}
+        {/* 底部代币输入区域 */}
         <div>
           <div className="text-sm text-[#929796] mb-3 font-normal">Receive</div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Image
-                src="/stake/assets/tokens/lsol.svg"
-                alt="LSOL"
+                src={bottomToken.icon}
+                alt={bottomToken.symbol}
                 width={32}
                 height={32}
               />
-              <span className="text-xl text-[#212121]">LSOL</span>
+              <span className="text-xl text-[#212121]">{bottomToken.symbol}</span>
             </div>
             <div className="text-right">
               <div className="text-[28px] leading-none text-[#929796]">0.00</div>
