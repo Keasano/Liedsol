@@ -6,7 +6,7 @@ export default function StakePage() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen pt-32">
+      <main className="min-h-screen pt-[112px]">
         <div className="relative w-full max-w-7xl mx-auto px-4">
           {/* 左侧装饰 */}
           <div className="fixed left-0 top-0 -z-10">
@@ -31,7 +31,7 @@ export default function StakePage() {
           </div>
 
           {/* APY 和 TVL */}
-          <div className="flex justify-center items-center gap-12 mb-8">
+          <div className="flex justify-center items-center gap-12 mb-6">
             <div className="text-center">
               <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">8.4%</div>
               <div className="text-[14px] font-light text-[#636161]">APY</div>

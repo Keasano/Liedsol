@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Web3Layout } from './Web3Layout';
 
 const navigationLinks = [
@@ -11,13 +14,15 @@ const navigationLinks = [
 ];
 
 export const Navigation = () => {
+  const pathname = usePathname();
+
   return (
     <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-[880px]">
       <div className="relative mx-4 rounded-full bg-[#F3F3EE] bg-opacity-50 backdrop-blur-[54px] px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="relative flex items-center gap-3">
+        <Link href="/" className={`relative flex items-center gap-3 ${pathname === '/' ? 'font-bold' : ''}`}>
           <Image 
-            src="/icons/logo.svg" 
+            src="/icons/liedsolLogo.svg" 
             alt="LIESOL" 
             width={23} 
             height={6} 
@@ -32,21 +37,20 @@ export const Navigation = () => {
             <Link
               key={item.name}
               href={item.href}
-              className="relative text-[14px] text-[#212121] transition-opacity hover:opacity-50"
+              className={`text-[14px] text-[#212121] transition-all hover:opacity-50 ${
+                pathname === item.href ? 'font-bold' : 'font-normal'
+              }`}
             >
-              <span className={`absolute inset-0 ${
-                item.href === '/' ? 'font-bold' : 'font-normal'
-              }`}>
-                {item.name}
-              </span>
-              <span className="invisible font-bold">{item.name}</span>
+              {item.name}
             </Link>
           ))}
         </div>
 
         {/* Connect Wallet Button */}
         <div className="relative">
-          <Web3Layout />
+          <button className="bg-[#A8EC8F] text-[#212121] px-6 h-10 rounded-full hover:opacity-90 transition-opacity font-medium text-[14px]">
+            Connect Wallet
+          </button>
         </div>
       </div>
     </nav>

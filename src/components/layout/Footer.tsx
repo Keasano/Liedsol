@@ -35,7 +35,7 @@ export const Footer = () => {
           <div className="max-w-[480px] pt-[3px]">
             <div className="flex items-center gap-3 mb-6">
               <Image 
-                src="/icons/logo.svg" 
+                src="/icons/liedsolLogo.svg" 
                 alt="LIEDSOL" 
                 width={23} 
                 height={6} 
