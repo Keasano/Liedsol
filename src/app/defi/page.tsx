@@ -3,32 +3,34 @@ import Image from 'next/image';
 
 export default function DefiPage() {
   return (
-    <main className="relative min-h-screen bg-[#FAFAF8]">
-      {/* 左上装饰 */}
-      <div className="absolute left-0 top-0">
-        <Image
-          src="/images/stake-bg-1.png"
-          alt=""
-          width={686}
-          height={686}
-          className="w-[686px] h-[686px]"
-        />
-      </div>
+    <main className="min-h-screen">
+      <div className="relative w-full max-w-7xl mx-auto px-4">
+        {/* 左侧装饰 */}
+        <div className="fixed left-0 top-0 -z-10">
+          <Image
+            src="/stake/assets/stake-left-decoration.svg"
+            alt=""
+            width={381}
+            height={637}
+            priority
+          />
+        </div>
 
-      {/* 右下装饰 */}
-      <div className="absolute right-0 bottom-0">
-        <Image
-          src="/images/stake-bg-2.png"
-          alt=""
-          width={686}
-          height={686}
-          className="w-[686px] h-[686px]"
-        />
-      </div>
+        {/* 右侧装饰 */}
+        <div className="fixed right-0 top-0 -z-10">
+          <Image
+            src="/stake/assets/stake-right-decoration.svg"
+            alt=""
+            width={381}
+            height={637}
+            priority
+          />
+        </div>
 
-      {/* 内容区域 */}
-      <div className="relative">
-        <DefiView />
+        {/* 内容区域 */}
+        <div className="pt-[136px]">
+          <DefiView />
+        </div>
       </div>
     </main>
   );

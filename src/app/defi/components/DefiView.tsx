@@ -19,16 +19,18 @@ interface StrategyCardProps {
 
 const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, features, action }) => {
   return (
-    <div className="bg-white rounded-[24px] p-6 border border-[#EFF0ED]">
-      <div className="flex items-center gap-3 mb-8">
-        <Image src={icon} alt="" width={32} height={32} />
+    <div className="bg-[#F7F8F5] rounded-[24px] px-6 pt-6 w-[360px] h-[300px] flex flex-col font-power-grotesk">
+      <div className="flex items-center gap-3 mb-6">
+        <Image src={icon} alt="" width={40} height={40} />
         <div>
           <h3 className="text-[16px] font-bold text-[#212121]">{title}</h3>
           <p className="text-[14px] text-[#636161]">{address}</p>
         </div>
       </div>
 
-      <div className="space-y-4 mb-8">
+      <div className="h-[1px] bg-[#ECEDEA] mb-6" />
+
+      <div className="space-y-4 mb-auto">
         <div className="flex justify-between">
           <span className="text-[14px] text-[#212121]">Solayer rewards</span>
           <span className="text-[14px] text-[#77DC53]">Yes</span>
@@ -43,12 +45,16 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
         </div>
       </div>
 
-      <button className="w-full flex items-center justify-between bg-[#F7F8F5] rounded-[16px] px-4 py-3">
+      <button className="w-full h-[48px] flex items-center justify-between bg-white rounded-full pl-[6px] pr-[14px] relative mb-[24px]">
         <div className="flex items-center gap-2">
-          <Image src={action.icon} alt="" width={24} height={24} />
+          <div className="py-[6px]">
+            <Image src="/defi/assets/lsol.svg" alt="" width={36} height={36} />
+          </div>
           <span className="text-[14px] text-[#212121]">{action.text}</span>
         </div>
-        <Image src="/icons/external-link.svg" alt="" width={16} height={16} />
+        <div className="py-[14px]">
+          <Image src="/defi/assets/arrow.svg" alt="" width={20} height={20} />
+        </div>
       </button>
     </div>
   );
@@ -57,7 +63,7 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
 export default function DefiView() {
   const strategies = [
     {
-      icon: '/icons/kamino-black.svg',
+      icon: '/defi/assets/kamino.svg',
       title: 'Vault Strategy on Kamino',
       address: '6GGY...zcm7',
       features: {
@@ -66,13 +72,13 @@ export default function DefiView() {
         audited: true
       },
       action: {
-        icon: '/icons/lsol.svg',
+        icon: '/defi/assets/lsol.svg',
         text: 'Supply LSOL'
       }
     },
     {
-      icon: '/icons/kamino-yellow.svg',
-      title: 'Vault Strategy on Kamino',
+      icon: '/defi/assets/orca.svg',
+      title: 'Provide liquidity on Orca',
       address: '6GGY...zcm7',
       features: {
         solayerRewards: true,
@@ -80,13 +86,13 @@ export default function DefiView() {
         audited: true
       },
       action: {
-        icon: '/icons/lsol.svg',
+        icon: '/defi/assets/lsol.svg',
         text: 'Supply LSOL'
       }
     },
     {
-      icon: '/icons/kamino-blue.svg',
-      title: 'Vault Strategy on Kamino',
+      icon: '/defi/assets/sanctum.svg',
+      title: 'Liquid Staking on Sanctum',
       address: '6GGY...zcm7',
       features: {
         solayerRewards: true,
@@ -94,13 +100,13 @@ export default function DefiView() {
         audited: true
       },
       action: {
-        icon: '/icons/lsol.svg',
+        icon: '/defi/assets/lsol.svg',
         text: 'Supply LSOL'
       }
     },
     {
-      icon: '/icons/kamino-navy.svg',
-      title: 'Vault Strategy on Kamino',
+      icon: '/defi/assets/allstake.svg',
+      title: 'Allstake',
       address: '6GGY...zcm7',
       features: {
         solayerRewards: true,
@@ -108,15 +114,15 @@ export default function DefiView() {
         audited: true
       },
       action: {
-        icon: '/icons/lsol.svg',
+        icon: '/defi/assets/lsol.svg',
         text: 'Leveraged LSOL Restaking'
       }
     }
   ];
 
   return (
-    <div className="container mx-auto px-4 pt-[120px]">
-      <div className="grid grid-cols-2 gap-6">
+    <div className="flex justify-center mb-[80px]">
+      <div className="grid grid-cols-2 gap-[24px]">
         {strategies.map((strategy, index) => (
           <StrategyCard key={index} {...strategy} />
         ))}
