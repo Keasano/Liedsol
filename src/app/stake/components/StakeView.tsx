@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useAccount } from 'wagmi';
+import { Web3Layout } from '@/components/Web3Layout';
 
 export function StakeView() {
   const [activeTab, setActiveTab] = useState<'stake' | 'unstake'>('stake');
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isWalletConnected, setIsWalletConnected] = useState(true); // 测试已连接状态
+  const { address: walletAddress, isConnected } = useAccount();
   const [inputAmount, setInputAmount] = useState('');
   const [outputAmount, setOutputAmount] = useState('');
 
@@ -99,7 +101,7 @@ export function StakeView() {
   }`;
 
   const getButtonState = () => {
-    if (!isWalletConnected) return { text: 'Connect Wallet', disabled: false };
+    if (!isConnected) return { text: 'Connect Wallet', disabled: false };
     if (!inputAmount) return { text: 'Enter an amount', disabled: true };
     const amount = parseFloat(inputAmount);
     const maxBalance = activeTab === 'stake' ? walletBalance.SOL : walletBalance.LSOL;
@@ -144,7 +146,7 @@ export function StakeView() {
         <div className={topTokenClasses}>
           <div className="flex justify-between items-center mb-3">
             <div className="text-sm text-[#929796] font-normal">{topToken.label}</div>
-            {isWalletConnected && (
+            {isConnected && (
               <div className="flex items-center">
                 <div className="flex items-center -mt-[1px]">
                   <Image
@@ -182,8 +184,8 @@ export function StakeView() {
                 value={inputAmount}
                 onChange={(e) => handleInputChange(e.target.value)}
                 placeholder="0.00"
-                disabled={!isWalletConnected}
-                className="text-[26px] leading-none text-[#929796] font-normal bg-transparent text-right w-[140px] focus:outline-none placeholder-[#929796]"
+                disabled={!isConnected}
+                className={`text-[26px] leading-none ${inputAmount ? 'text-[#212121]' : 'text-[#929796]'} font-normal bg-transparent text-right w-[140px] focus:outline-none placeholder-[#929796]`}
               />
               <div className="text-sm text-[#929796] mt-1 font-normal">
                 {calculateUsdValue(inputAmount, topToken.symbol === 'LSOL')}
@@ -218,7 +220,7 @@ export function StakeView() {
         <div className={bottomTokenClasses}>
           <div className="flex justify-between items-center mb-3">
             <div className="text-sm text-[#929796] font-normal">Receive</div>
-            {isWalletConnected && (
+            {isConnected && (
               <div className="flex items-center">
                 <div className="flex items-center -mt-[1px]">
                   <Image
@@ -244,7 +246,7 @@ export function StakeView() {
               <span className="text-xl text-[#212121]">{bottomToken.symbol}</span>
             </div>
             <div className="text-right">
-              <div className="text-[26px] leading-none text-[#929796] font-normal">
+              <div className={`text-[26px] leading-none ${outputAmount && outputAmount !== '0.00' ? 'text-[#212121]' : 'text-[#929796]'} font-normal`}>
                 {outputAmount || '0.00'}
               </div>
               <div className="text-sm text-[#929796] mt-1 font-normal">
@@ -261,18 +263,25 @@ export function StakeView() {
         <span className="text-[14px] font-light text-[#636161]">1 SOL = 1.030487323 LSOL</span>
       </div>
 
-      {/* 操作按钮 */}
-      <button 
-        className={`w-full h-12 rounded-full text-base font-medium transition-all duration-300 bg-[#A8EC8F] text-[#212121] ${
-          buttonState.disabled 
-            ? 'opacity-50 cursor-not-allowed' 
-            : 'hover:bg-opacity-90'
-        }`}
-        disabled={buttonState.disabled}
-        onClick={() => !buttonState.disabled && setIsWalletConnected(!isWalletConnected)}
-      >
-        {buttonState.text}
-      </button>
+      {/* 底部按钮区域 */}
+      <div className="w-full">
+        {!isConnected ? (
+          <div className="w-full">
+            <Web3Layout className="w-full h-12 rounded-full text-base font-medium bg-[#A8EC8F] text-[#212121] hover:opacity-90 transition-all" />
+          </div>
+        ) : (
+          <button
+            disabled={buttonState.disabled}
+            className={`w-full h-12 rounded-full text-base font-medium transition-all ${
+              buttonState.disabled
+                ? 'bg-[#F7F8F5] text-[#929796] cursor-not-allowed'
+                : 'bg-[#A8EC8F] text-[#212121] hover:opacity-90'
+            }`}
+          >
+            {buttonState.text}
+          </button>
+        )}
+      </div>
     </div>
   );
 } 

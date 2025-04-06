@@ -43,21 +43,42 @@
 }
 
 :root {
-  --foreground-rgb: 33, 33, 33;
-  --background-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+/* 防止滚动条导致的布局偏移 */
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+/* 修改滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* 当 ConnectKit 弹窗打开时，防止内容偏移 */
+body.connect-wallet-open {
+  padding-right: 8px; /* 与滚动条宽度相同 */
 }
 
 body {
   font-family: 'PowerGrotesk', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  background: #fff;
+  min-height: 100vh;
   width: 100%;
-  overflow-x: hidden;
-}
-
-html {
-  scroll-behavior: smooth;
-  width: 100vw;
   overflow-x: hidden;
 }
 
@@ -197,13 +218,6 @@ html {
 
 .animate-fade-up {
   animation: fade-up 0.6s ease-out forwards;
-}
-
-/* 防止页面偏移 */
-html {
-  scroll-behavior: smooth;
-  width: 100vw;
-  overflow-x: hidden;
 }
 
 /* 移除 ConnectKit 的自动 padding */

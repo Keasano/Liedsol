@@ -3,11 +3,7 @@
 import { ConnectKitButton } from 'connectkit';
 import { useEffect, useState } from 'react';
 
-interface Props {
-  className?: string;
-}
-
-export function ConnectWallet({ className }: Props) {
+export function ConnectWallet() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -18,7 +14,7 @@ export function ConnectWallet({ className }: Props) {
   if (!mounted) {
     return (
       <button
-        className={className || "bg-[#A8EC8F] text-black w-[130px] h-9 flex items-center justify-center rounded-full text-[14px] font-medium"}
+        className="bg-[#A8EC8F] text-black w-[130px] h-9 flex items-center justify-center rounded-full text-[14px] font-medium"
       >
         Connect Wallet
       </button>
@@ -42,7 +38,7 @@ export function ConnectWallet({ className }: Props) {
         return (
           <button
             onClick={handleClick}
-            className={className || "bg-[#A8EC8F] text-black w-[130px] h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity"}
+            className="bg-[#A8EC8F] text-black w-[130px] h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity"
           >
             {isConnected ? displayAddress : 'Connect Wallet'}
           </button>

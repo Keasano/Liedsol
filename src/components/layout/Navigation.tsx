@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Web3Layout } from './Web3Layout';
+import { Web3Layout } from '@/components/Web3Layout';
 
 const navigationLinks = [
   { name: 'Home', href: '/' },
@@ -13,12 +13,12 @@ const navigationLinks = [
   { name: 'Docs', href: '/docs' },
 ];
 
-export const Navigation = () => {
+export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-[880px]">
-      <div className="relative mx-4 rounded-full bg-[#F3F3EE] bg-opacity-50 backdrop-blur-[54px] px-6 h-16 flex items-center justify-between">
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
+      <nav className="w-full max-w-[880px] rounded-full bg-[#F3F3EE] bg-opacity-50 backdrop-blur-[54px] px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className={`relative flex items-center gap-3 ${pathname === '/' ? 'font-bold' : ''}`}>
           <Image 
@@ -48,11 +48,9 @@ export const Navigation = () => {
 
         {/* Connect Wallet Button */}
         <div className="relative">
-          <button className="bg-[#A8EC8F] text-[#212121] px-6 h-10 rounded-full hover:opacity-90 transition-opacity font-medium text-[14px]">
-            Connect Wallet
-          </button>
+          <Web3Layout />
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
-}; 
+} 

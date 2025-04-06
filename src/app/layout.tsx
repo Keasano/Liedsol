@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+import { ClientLayout } from "./client-layout";
+import { ScrollBehavior } from "./components/ScrollBehavior";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +17,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <head>
@@ -29,8 +32,17 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className={`${inter.className} min-h-screen bg-white font-power-grotesk overflow-x-hidden`}>
-        {children}
+      <body className={`${inter.className} overflow-y-scroll`}>
+        <ScrollBehavior />
+        <Providers>
+          <div className="relative min-h-screen">
+            <ClientLayout>
+              <main className="relative w-full max-w-[1440px] mx-auto px-4">
+                {children}
+              </main>
+            </ClientLayout>
+          </div>
+        </Providers>
       </body>
     </html>
   );
