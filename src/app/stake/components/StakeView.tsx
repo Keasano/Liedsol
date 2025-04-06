@@ -144,22 +144,51 @@ export function StakeView() {
 
   return (
     <div className="w-full max-w-[480px] mx-auto font-power-grotesk">
+      {/* 切换滑块 */}
+      <div className="bg-[#F7F8F5] rounded-full p-[5px] flex mb-4 relative h-12">
+        <div 
+          className={`absolute w-[calc(50%-10px)] h-[calc(100%-10px)] bg-white rounded-full transition-transform duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.06)] ${
+            activeTab === 'unstake' ? 'translate-x-[calc(100%+10px)]' : 'translate-x-0'
+          }`}
+        />
+        <button
+          onClick={() => handleTabChange('stake')}
+          className={`flex-1 h-10 rounded-full text-base font-medium z-10 transition-colors relative ${
+            activeTab === 'stake'
+              ? 'text-[#212121]'
+              : 'text-[#929796] hover:text-[#212121]'
+          }`}
+        >
+          Stake
+        </button>
+        <button
+          onClick={() => handleTabChange('unstake')}
+          className={`flex-1 h-10 rounded-full text-base font-medium z-10 transition-colors relative ${
+            activeTab === 'unstake'
+              ? 'text-[#212121]'
+              : 'text-[#929796] hover:text-[#212121]'
+          }`}
+        >
+          Unstake
+        </button>
+      </div>
+
       {/* 主要内容区域 */}
       <div className="bg-[#F7F8F5] rounded-3xl p-6 h-[266px] flex flex-col justify-between mb-4 overflow-hidden">
         {/* 顶部代币输入区域 */}
         <div className={topTokenClasses}>
           <div className="flex justify-between items-center mb-3">
-            <div className="text-sm text-[#929796] font-normal font-power-grotesk">Stake</div>
+            <div className="text-sm text-[#929796] font-normal font-power-grotesk">{topToken.label}</div>
             {isMockConnected && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-[3px]">
                 <Image
                   src="/stake/assets/tokens/wallet.svg"
                   alt="Balance"
                   width={18}
                   height={18}
                 />
-                <span className="text-sm text-[#929796] font-normal font-power-grotesk">{walletBalance.SOL.toFixed(2)} SOL</span>
-                <div className="w-[1px] h-[14px] bg-[#ECEDEA]"></div>
+                <span className="text-sm text-[#929796] font-normal font-power-grotesk">{topToken.balance.toFixed(2)} {topToken.symbol}</span>
+                <div className="w-[1px] h-[14px] bg-[#ECEDEA] mx-2"></div>
                 <span className="text-sm text-[#212121] font-normal cursor-pointer hover:opacity-80 font-power-grotesk" onClick={handleMaxClick}>Max</span>
               </div>
             )}
