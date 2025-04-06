@@ -18,7 +18,7 @@ export function Navigation() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
-      <nav className="w-full max-w-[880px] rounded-full bg-[#F3F3EE] bg-opacity-50 backdrop-blur-[54px] px-6 h-16 flex items-center justify-between">
+      <nav className="w-full max-w-[880px] rounded-full bg-[#F3F3EE]/50 backdrop-blur-[54px] px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className={`relative flex items-center gap-3 ${pathname === '/' ? 'font-bold' : ''}`}>
           <Image 
@@ -28,7 +28,7 @@ export function Navigation() {
             height={6} 
             priority
           />
-          <span className="text-[#212121] text-[18px] font-bold">LIESOL</span>
+          <span className="text-[#212121] text-[18px] font-bold font-power-grotesk">LIESOL</span>
         </Link>
 
         {/* Navigation Links */}
@@ -37,7 +37,7 @@ export function Navigation() {
             <Link
               key={item.name}
               href={item.href}
-              className={`text-[14px] text-[#212121] transition-all hover:opacity-50 ${
+              className={`text-[14px] text-[#212121] transition-all hover:opacity-50 font-power-grotesk ${
                 pathname === item.href ? 'font-bold' : 'font-normal'
               }`}
             >
@@ -48,7 +48,7 @@ export function Navigation() {
 
         {/* Connect Wallet Button */}
         <div className="relative">
-          <Web3Layout />
+          <Web3Layout className="bg-[#F0F0EB] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk" />
         </div>
       </nav>
     </div>

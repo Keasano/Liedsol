@@ -76,7 +76,7 @@ module.exports = {
         '700': '700ms',
       },
       fontFamily: {
-        'power-grotesk': ['PowerGrotesk', 'sans-serif'],
+        'power-grotesk': ['PowerGroteskTrial', 'sans-serif'],
       },
     },
   },
