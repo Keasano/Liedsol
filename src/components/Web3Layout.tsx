@@ -53,7 +53,7 @@ export function Web3Layout({ className = '' }: { className?: string }) {
           initialState 
             ? 'bg-[#F0F0EB]' 
             : 'bg-[#A8EC8F]'
-        } text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk`}
+        } text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity font-power-grotesk`}
       >
         {initialState ? initialAddress : 'Connect Wallet'}
       </button>
@@ -72,7 +72,7 @@ export function Web3Layout({ className = '' }: { className?: string }) {
           <>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="bg-[#F0F0EB] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk"
+              className="bg-[#F0F0EB] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity font-power-grotesk"
             >
               {mockAddress}
             </button>
@@ -97,7 +97,7 @@ export function Web3Layout({ className = '' }: { className?: string }) {
                 onClick={() => {
                   setMockConnected(true);
                 }}
-                className="bg-[#A8EC8F] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk"
+                className="bg-[#A8EC8F] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity font-power-grotesk"
               >
                 Connect Wallet
               </button>
