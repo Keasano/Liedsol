@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { StakeView } from './components/StakeView';
+import StakeView from './components/StakeView';
 import { useAccount } from 'wagmi';
 
 export default function StakePage() {

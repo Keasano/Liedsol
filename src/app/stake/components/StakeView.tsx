@@ -1,25 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useAccount, useDisconnect } from 'wagmi';
 import { Web3Layout } from '@/components/Web3Layout';
 import { ConnectKitButton } from 'connectkit';
 import { useWalletState } from '@/store/useWalletState';
 
-export function StakeView() {
+export default function StakeView() {
   const [activeTab, setActiveTab] = useState<'stake' | 'unstake'>('stake');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const { address: walletAddress, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const [inputAmount, setInputAmount] = useState('');
   const [outputAmount, setOutputAmount] = useState('');
-  const { isMockConnected, setMockConnected } = useWalletState();
+  const { isMockConnected, mockAddress, mockBalance, setMockConnected } = useWalletState();
+  const [walletBalance, setWalletBalance] = useState({
+    SOL: mockBalance.SOL,
+    LSOL: mockBalance.LSOL
+  });
 
-  // 模拟钱包余额数据
-  const walletBalance = {
-    SOL: 100.95,
-    LSOL: 12.45
+  // 模拟钱包连接状态
+  useEffect(() => {
+    // 使用模拟数据
+    if (isMockConnected) {
+      setWalletBalance({
+        SOL: mockBalance.SOL,
+        LSOL: mockBalance.LSOL
+      });
+    } else {
+      setWalletBalance({
+        SOL: 0,
+        LSOL: 0
+      });
+    }
+  }, [isMockConnected, mockBalance]);
+
+  const handleConnect = () => {
+    setMockConnected(true);
+    setWalletBalance({
+      SOL: mockBalance.SOL,
+      LSOL: mockBalance.LSOL
+    });
+  };
+
+  const handleDisconnect = () => {
+    setMockConnected(false);
+    setWalletBalance({
+      SOL: 0,
+      LSOL: 0
+    });
   };
 
   // 模拟 SOL 价格数据
@@ -282,7 +312,7 @@ export function StakeView() {
               <button
                 onClick={() => {
                   if (show) show();
-                  setMockConnected(true);
+                  handleConnect();
                 }}
                 className={`w-full h-[48px] rounded-full text-base font-medium transition-all text-[#212121] font-power-grotesk ${buttonState.className}`}
               >

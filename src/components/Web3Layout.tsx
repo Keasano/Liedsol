@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ConnectKitButton } from 'connectkit';
 import { useAccount, useDisconnect } from 'wagmi';
@@ -10,28 +10,57 @@ interface Props {
   className?: string;
 }
 
-function ErrorFallback() {
+const ErrorFallback = () => {
   return (
-    <button className="bg-[#A8EC8F] text-black w-[130px] h-9 flex items-center justify-center rounded-full text-[14px] font-medium">
+    <button
+      className="bg-[#A8EC8F] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk"
+    >
       Connect Wallet
     </button>
   );
-}
+};
 
 export function Web3Layout({ className = '' }: { className?: string }) {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { isMockConnected, setMockConnected } = useWalletState();
+  const { isMockConnected, mockAddress, setMockConnected } = useWalletState();
+  const [mounted, setMounted] = useState(false);
 
-  // 格式化钱包地址
-  const formatAddress = (address: string) => {
-    if (!address) return '';
-    return `${address.slice(0, 4)}...${address.slice(-4)}`;
-  };
+  // 处理组件加载状态
+  useEffect(() => {
+    // 从 localStorage 直接获取连接状态
+    const walletStorage = localStorage.getItem('wallet-storage');
+    const initialState = walletStorage ? JSON.parse(walletStorage).state.isMockConnected : false;
+    
+    // 如果已经连接，直接设置状态
+    if (initialState) {
+      setMockConnected(true);
+    }
+    
+    setMounted(true);
+  }, [setMockConnected]);
+
+  // 如果组件未加载完成，显示与当前状态匹配的静态按钮
+  if (!mounted) {
+    const walletStorage = localStorage.getItem('wallet-storage');
+    const initialState = walletStorage ? JSON.parse(walletStorage).state.isMockConnected : false;
+    const initialAddress = walletStorage ? JSON.parse(walletStorage).state.mockAddress : '';
+
+    return (
+      <button
+        className={`${
+          initialState 
+            ? 'bg-[#F0F0EB]' 
+            : 'bg-[#A8EC8F]'
+        } text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk`}
+      >
+        {initialState ? initialAddress : 'Connect Wallet'}
+      </button>
+    );
+  }
 
   const handleDisconnect = () => {
-    disconnect();
     setIsDropdownOpen(false);
     setMockConnected(false);
   };
@@ -45,12 +74,15 @@ export function Web3Layout({ className = '' }: { className?: string }) {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="bg-[#F0F0EB] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk"
             >
-              0xDA...B6fn
+              {mockAddress}
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg p-1 z-50">
                 <button
-                  onClick={handleDisconnect}
+                  onClick={() => {
+                    handleDisconnect();
+                    setIsDropdownOpen(false);
+                  }}
                   className="w-full px-4 py-2 text-left text-sm text-[#212121] hover:bg-[#F7F8F5] rounded-lg font-power-grotesk"
                 >
                   Disconnect
@@ -63,9 +95,8 @@ export function Web3Layout({ className = '' }: { className?: string }) {
             {({ show }) => (
               <button 
                 onClick={() => {
-                  if (show) show();
                   setMockConnected(true);
-                }} 
+                }}
                 className="bg-[#A8EC8F] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk"
               >
                 Connect Wallet
