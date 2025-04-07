@@ -28,7 +28,7 @@ export default function DefiPage() {
         </div>
 
         {/* 内容区域 */}
-        <div className="pt-[136px]">
+        <div className="pt-[56px]">
           <DefiView />
         </div>
       </div>
