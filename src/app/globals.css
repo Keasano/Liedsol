@@ -42,6 +42,15 @@
     font-style: italic;
     font-display: swap;
   }
+
+  html {
+    font-family: 'Power Grotesk Trial', system-ui, sans-serif;
+  }
+}
+
+/* 重置所有元素的字体 */
+* {
+  font-family: 'Power Grotesk Trial', system-ui, sans-serif;
 }
 
 :root {

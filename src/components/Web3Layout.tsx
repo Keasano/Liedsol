@@ -26,36 +26,42 @@ export function Web3Layout({ className = '' }: { className?: string }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isMockConnected, mockAddress, setMockConnected } = useWalletState();
   const [mounted, setMounted] = useState(false);
+  const [initialWalletState, setInitialWalletState] = useState({
+    isMockConnected: false,
+    mockAddress: ''
+  });
 
   // 处理组件加载状态
   useEffect(() => {
-    // 从 localStorage 直接获取连接状态
-    const walletStorage = localStorage.getItem('wallet-storage');
-    const initialState = walletStorage ? JSON.parse(walletStorage).state.isMockConnected : false;
-    
-    // 如果已经连接，直接设置状态
-    if (initialState) {
-      setMockConnected(true);
+    try {
+      const walletStorage = localStorage.getItem('wallet-storage');
+      if (walletStorage) {
+        const parsedStorage = JSON.parse(walletStorage);
+        setInitialWalletState({
+          isMockConnected: parsedStorage.state.isMockConnected || false,
+          mockAddress: parsedStorage.state.mockAddress || ''
+        });
+        if (parsedStorage.state.isMockConnected) {
+          setMockConnected(true);
+        }
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
     }
-    
     setMounted(true);
   }, [setMockConnected]);
 
   // 如果组件未加载完成，显示与当前状态匹配的静态按钮
   if (!mounted) {
-    const walletStorage = localStorage.getItem('wallet-storage');
-    const initialState = walletStorage ? JSON.parse(walletStorage).state.isMockConnected : false;
-    const initialAddress = walletStorage ? JSON.parse(walletStorage).state.mockAddress : '';
-
     return (
       <button
         className={`${
-          initialState 
+          initialWalletState.isMockConnected 
             ? 'bg-[#F0F0EB]' 
             : 'bg-[#A8EC8F]'
         } text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity font-power-grotesk`}
       >
-        {initialState ? initialAddress : 'Connect Wallet'}
+        {initialWalletState.isMockConnected ? initialWalletState.mockAddress : 'Connect Wallet'}
       </button>
     );
   }
@@ -94,9 +100,7 @@ export function Web3Layout({ className = '' }: { className?: string }) {
           <ConnectKitButton.Custom>
             {({ show }) => (
               <button 
-                onClick={() => {
-                  setMockConnected(true);
-                }}
+                onClick={show}
                 className="bg-[#A8EC8F] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-medium hover:opacity-90 transition-opacity font-power-grotesk"
               >
                 Connect Wallet

@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { SafeConnector } from 'wagmi/connectors/safe';
 
 // 创建一个静态的 QueryClient 实例
 const queryClient = new QueryClient();
@@ -47,13 +46,6 @@ const config = createConfig(
           darkMode: false,
           headlessMode: true
         }
-      }),
-      new SafeConnector({
-        chains: [mainnet],
-        options: {
-          allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
-          debug: false,
-        },
       }),
       new WalletConnectConnector({
         chains: [mainnet],
