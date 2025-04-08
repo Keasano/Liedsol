@@ -20,19 +20,26 @@ export default function AccountView() {
     }
   ];
 
-  // 如果未连接钱包，重定向到主页
-  useEffect(() => {
-    if (!isMockConnected) {
-      router.push('/');
-    }
-  }, [isMockConnected, router]);
-
+  // 如果未连接钱包，显示空状态
   if (!isMockConnected) {
-    return null;
+    return (
+      <div className="h-[calc(100vh-144px)] flex flex-col items-center justify-center">
+        <Image
+          src="/account/assets/empty-wallet.svg"
+          alt="Empty wallet state"
+          width={160}
+          height={160}
+          className="mb-8"
+        />
+        <p className="text-[16px] text-[#212121] mb-8">
+          Please connect a wallet first
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="font-power-grotesk h-[calc(100vh-144px)] flex flex-col">
+    <div className="h-[calc(100vh-144px)] flex flex-col">
       {/* 数据组 */}
       <div className="flex justify-center items-center gap-12 mb-10">
         <div className="text-center">
