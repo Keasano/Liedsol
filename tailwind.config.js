@@ -30,6 +30,7 @@ module.exports = {
         'float': 'float 3s ease-in-out infinite',
         'spin-left': 'spinLeft 20s linear infinite',
         'spin-right': 'spinRight 20s linear infinite',
+        'fade-in-up': 'fadeInUp 0.5s ease-out forwards'
       },
       keyframes: {
         fadeUp: {
@@ -64,6 +65,16 @@ module.exports = {
           '0%': { transform: 'translateY(-50%) rotate(0deg)' },
           '100%': { transform: 'translateY(-50%) rotate(360deg)' },
         },
+        fadeInUp: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
+        }
       },
       animationDelay: {
         '0': '0ms',

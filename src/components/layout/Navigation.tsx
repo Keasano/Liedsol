@@ -16,6 +16,14 @@ const navigationLinks = [
 export function Navigation() {
   const pathname = usePathname();
 
+  // 检查当前路径是否以某个链接开头
+  const isActiveLink = (href: string) => {
+    if (href === '/') {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
       <nav className="w-full max-w-[880px] rounded-full bg-[#F3F3EE]/50 backdrop-blur-[54px] px-6 h-16 flex items-center justify-between">
@@ -38,7 +46,7 @@ export function Navigation() {
               key={item.name}
               href={item.href}
               className={`text-[14px] text-[#212121] transition-all hover:opacity-50 font-power-grotesk ${
-                pathname === item.href ? 'font-bold' : 'font-normal'
+                isActiveLink(item.href) ? 'font-bold' : 'font-normal'
               }`}
             >
               {item.name}
