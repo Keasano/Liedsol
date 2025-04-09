@@ -30,6 +30,15 @@ const itemVariants = {
   }
 };
 
+// 格式化数字为紧凑格式
+const formatCompact = (value: number) => {
+  const formatter = Intl.NumberFormat('en', { 
+    notation: 'compact',
+    maximumFractionDigits: 2
+  });
+  return formatter.format(value);
+};
+
 export default function AccountView() {
   const router = useRouter();
   const { isMockConnected, mockAddress } = useWalletState();
@@ -39,16 +48,25 @@ export default function AccountView() {
   const lsolCount = useMotionValue(0);
   const stakedCount = useMotionValue(0);
 
-  const tvlDisplay = useTransform(tvlCount, value => value.toFixed(2));
-  const lsolDisplay = useTransform(lsolCount, value => value.toFixed(2));
-  const stakedDisplay = useTransform(stakedCount, value => value.toFixed(2));
+  const tvlDisplay = useTransform(tvlCount, value => formatCompact(value));
+  const lsolDisplay = useTransform(lsolCount, value => formatCompact(value));
+  const stakedDisplay = useTransform(stakedCount, value => formatCompact(value));
 
   useEffect(() => {
     if (isMockConnected) {
       // 动画过渡到目标值
-      animate(tvlCount, 0, { duration: 2 });
-      animate(lsolCount, 0, { duration: 2 });
-      animate(stakedCount, 1032.91, { duration: 2 });
+      animate(tvlCount, 0, { 
+        duration: 2,
+        ease: "easeOut"
+      });
+      animate(lsolCount, 0, { 
+        duration: 2,
+        ease: "easeOut"
+      });
+      animate(stakedCount, 1032.91, { 
+        duration: 2,
+        ease: "easeOut"
+      });
     }
   }, [isMockConnected]);
 
