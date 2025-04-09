@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ConnectKitButton } from 'connectkit';
+import { ConnectKitButton, Avatar } from 'connectkit';
 
 const navigationLinks = [
   { name: 'Home', href: '/' },
@@ -18,7 +18,7 @@ export function Navigation() {
 
   // 检查当前路径是否以某个链接开头
   const isActiveLink = (href: string) => {
-    if (href === '/') {
+    if (href === '/' ) {
       return pathname === href;
     }
     return pathname.startsWith(href);
@@ -57,17 +57,24 @@ export function Navigation() {
         {/* Connect Wallet Button */}
         <div className="relative">
           <ConnectKitButton.Custom>
-            {({ isConnected, show, address, ensName }) => {
-              const displayAddress = ensName || (address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '');
-              
+            {({ isConnected, show, address, ensName, chain, truncatedAddress }) => {
               return (
                 <button
                   onClick={show}
                   className={`${
                     isConnected ? 'bg-[#F0F0EB]' : 'bg-[#A8EC8F]'
-                  } text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk`}
+                  } text-[#212121] px-3 py-[10px] flex items-center justify-center gap-2 rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk`}
                 >
-                  {isConnected ? displayAddress : 'Connect Wallet'}
+                  {isConnected ? (
+                    <>
+                      <div className="w-5 h-5 rounded-full overflow-hidden">
+                        <Avatar address={address} size={20} />
+                      </div>
+                      {truncatedAddress || ensName}
+                    </>
+                  ) : (
+                    'Connect Wallet'
+                  )}
                 </button>
               );
             }}
