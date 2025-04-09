@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useWalletState } from '@/store/useWalletState';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // 动画变体
 const containerVariants = {
@@ -30,6 +30,22 @@ const itemVariants = {
   }
 };
 
+// 数字动画变体
+const numberVariants = {
+  enter: {
+    y: 20,
+    opacity: 0
+  },
+  center: {
+    y: 0,
+    opacity: 1
+  },
+  exit: {
+    y: -20,
+    opacity: 0
+  }
+};
+
 // 格式化数字为紧凑格式
 const formatCompact = (value: number) => {
   const formatter = Intl.NumberFormat('en', { 
@@ -42,31 +58,35 @@ const formatCompact = (value: number) => {
 export default function AccountView() {
   const router = useRouter();
   const { isMockConnected, mockAddress } = useWalletState();
-
-  // 创建动画数值
-  const tvlCount = useMotionValue(0);
-  const lsolCount = useMotionValue(0);
-  const stakedCount = useMotionValue(0);
-
-  const tvlDisplay = useTransform(tvlCount, value => formatCompact(value));
-  const lsolDisplay = useTransform(lsolCount, value => formatCompact(value));
-  const stakedDisplay = useTransform(stakedCount, value => formatCompact(value));
+  const [tvl, setTvl] = useState(0);
+  const [lsol, setLsol] = useState(0);
+  const [staked, setStaked] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    if (isMockConnected) {
-      // 动画过渡到目标值
-      animate(tvlCount, 0, { 
-        duration: 2,
-        ease: "easeOut"
-      });
-      animate(lsolCount, 0, { 
-        duration: 2,
-        ease: "easeOut"
-      });
-      animate(stakedCount, 1032.91, { 
-        duration: 2,
-        ease: "easeOut"
-      });
+    if (isMockConnected && !isAnimating) {
+      setIsAnimating(true);
+      const duration = 2000; // 2秒
+      const steps = 60; // 每秒30帧
+      const interval = duration / steps;
+      
+      let step = 0;
+      const timer = setInterval(() => {
+        const progress = step / steps;
+        const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+        setTvl(0);
+        setLsol(0);
+        setStaked(1032.91 * easeProgress);
+
+        if (step >= steps) {
+          setIsAnimating(false);
+          clearInterval(timer);
+        }
+        step++;
+      }, interval);
+
+      return () => clearInterval(timer);
     }
   }, [isMockConnected]);
 
@@ -122,7 +142,20 @@ export default function AccountView() {
         variants={itemVariants}
       >
         <motion.div className="text-center" variants={itemVariants}>
-          <motion.div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">{tvlDisplay}</motion.div>
+          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121] h-[34px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tvl}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                variants={numberVariants}
+                transition={{ duration: 0.2 }}
+              >
+                {formatCompact(tvl)}
+              </motion.div>
+            </AnimatePresence>
+          </div>
           <div className="text-[14px] font-light text-[#636161]">MY TVL</div>
         </motion.div>
 
@@ -133,7 +166,20 @@ export default function AccountView() {
         />
 
         <motion.div className="text-center" variants={itemVariants}>
-          <motion.div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">{lsolDisplay}</motion.div>
+          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121] h-[34px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={lsol}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                variants={numberVariants}
+                transition={{ duration: 0.2 }}
+              >
+                {formatCompact(lsol)}
+              </motion.div>
+            </AnimatePresence>
+          </div>
           <div className="text-[14px] font-light text-[#636161]">MY LSOL</div>
         </motion.div>
 
@@ -144,7 +190,20 @@ export default function AccountView() {
         />
 
         <motion.div className="text-center" variants={itemVariants}>
-          <motion.div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">{stakedDisplay}</motion.div>
+          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121] h-[34px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={staked}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                variants={numberVariants}
+                transition={{ duration: 0.2 }}
+              >
+                {formatCompact(staked)}
+              </motion.div>
+            </AnimatePresence>
+          </div>
           <div className="text-[14px] font-light text-[#636161]">TOTAL SOL STAKED</div>
         </motion.div>
       </motion.div>
