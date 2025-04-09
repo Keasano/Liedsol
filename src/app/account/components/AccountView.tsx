@@ -66,24 +66,44 @@ export default function AccountView() {
   useEffect(() => {
     if (isMockConnected && !isAnimating) {
       setIsAnimating(true);
-      const duration = 2000; // 2秒
-      const steps = 60; // 每秒30帧
+      const duration = 1000; // 1秒
+      const steps = 20; // 每秒20帧
       const interval = duration / steps;
+      const targetValues = {
+        tvl: 500.0,    // 设置目标值
+        lsol: 250.0,   // 设置目标值
+        staked: 1032.91
+      };
       
-      let step = 0;
+      let currentValues = {
+        tvl: 0,
+        lsol: 0,
+        staked: 0
+      };
+
       const timer = setInterval(() => {
-        const progress = step / steps;
+        const progress = Math.min(1, (currentValues.staked / targetValues.staked));
         const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+        
+        const newValues = {
+          tvl: targetValues.tvl * easeProgress,
+          lsol: targetValues.lsol * easeProgress,
+          staked: targetValues.staked * easeProgress
+        };
 
-        setTvl(0);
-        setLsol(0);
-        setStaked(1032.91 * easeProgress);
-
-        if (step >= steps) {
+        setTvl(newValues.tvl);
+        setLsol(newValues.lsol);
+        setStaked(newValues.staked);
+        
+        currentValues.staked += (targetValues.staked / steps);
+        
+        if (currentValues.staked >= targetValues.staked) {
           setIsAnimating(false);
+          setTvl(targetValues.tvl);    // 确保最终值精确
+          setLsol(targetValues.lsol);  // 确保最终值精确
+          setStaked(targetValues.staked); // 确保最终值精确
           clearInterval(timer);
         }
-        step++;
       }, interval);
 
       return () => clearInterval(timer);
@@ -138,74 +158,84 @@ export default function AccountView() {
     >
       {/* 数据组 */}
       <motion.div 
-        className="flex justify-center items-center gap-12 mb-10"
+        className="flex justify-center items-center gap-[24px] mb-[56px] w-full mx-auto"
         variants={itemVariants}
       >
-        <motion.div className="text-center" variants={itemVariants}>
-          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121] h-[34px] overflow-hidden">
-            <AnimatePresence mode="wait">
+        {/* MY TVL */}
+        <div className="flex flex-col items-center w-[100px]">
+          <div className="text-[28px] leading-none font-bold text-[#212121] h-[34px] overflow-hidden">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={tvl}
                 initial="enter"
                 animate="center"
                 exit="exit"
                 variants={numberVariants}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
+                className="inline-block w-full text-center"
               >
                 {formatCompact(tvl)}
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="text-[14px] font-light text-[#636161]">MY TVL</div>
-        </motion.div>
+          <div className="text-[14px] font-light text-[#636161] whitespace-nowrap mt-1.5">MY TVL</div>
+        </div>
 
         {/* 绿色小方块 */}
-        <motion.div 
-          className="w-2 h-2 bg-[#A8EC8F] mt-[-20px]" 
-          variants={itemVariants}
-        />
+        <div className="flex justify-center items-center">
+          <motion.div 
+            className="bg-[#A8EC8F] w-[8px] h-[8px]" 
+            variants={itemVariants}
+          />
+        </div>
 
-        <motion.div className="text-center" variants={itemVariants}>
-          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121] h-[34px] overflow-hidden">
-            <AnimatePresence mode="wait">
+        {/* MY LSOL */}
+        <div className="flex flex-col items-center w-[100px]">
+          <div className="text-[28px] leading-none font-bold text-[#212121] h-[34px] overflow-hidden">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={lsol}
                 initial="enter"
                 animate="center"
                 exit="exit"
                 variants={numberVariants}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
+                className="inline-block w-full text-center"
               >
                 {formatCompact(lsol)}
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="text-[14px] font-light text-[#636161]">MY LSOL</div>
-        </motion.div>
+          <div className="text-[14px] font-light text-[#636161] whitespace-nowrap mt-1.5">MY LSOL</div>
+        </div>
 
         {/* 绿色小方块 */}
-        <motion.div 
-          className="w-2 h-2 bg-[#A8EC8F] mt-[-20px]" 
-          variants={itemVariants}
-        />
+        <div className="flex justify-center items-center">
+          <motion.div 
+            className="bg-[#A8EC8F] w-[8px] h-[8px]" 
+            variants={itemVariants}
+          />
+        </div>
 
-        <motion.div className="text-center" variants={itemVariants}>
-          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121] h-[34px] overflow-hidden">
-            <AnimatePresence mode="wait">
+        {/* TOTAL SOL STAKED */}
+        <div className="flex flex-col items-center w-[100px]">
+          <div className="text-[28px] leading-none font-bold text-[#212121] h-[34px] overflow-hidden">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={staked}
                 initial="enter"
                 animate="center"
                 exit="exit"
                 variants={numberVariants}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
+                className="inline-block w-full text-center"
               >
                 {formatCompact(staked)}
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="text-[14px] font-light text-[#636161]">TOTAL SOL STAKED</div>
-        </motion.div>
+          <div className="text-[14px] font-light text-[#636161] whitespace-nowrap mt-1.5">TOTAL SOL STAKED</div>
+        </div>
       </motion.div>
 
       {/* 活动记录表格 */}
