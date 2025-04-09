@@ -6,6 +6,31 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { Web3Layout } from '@/components/Web3Layout';
 import { ConnectKitButton } from 'connectkit';
 import { useWalletState } from '@/store/useWalletState';
+import { motion } from 'framer-motion';
+
+// 动画变体
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  }
+};
 
 export default function StakeView() {
   const [activeTab, setActiveTab] = useState<'stake' | 'unstake'>('stake');
@@ -173,9 +198,17 @@ export default function StakeView() {
   const buttonState = getButtonState();
 
   return (
-    <div className="w-full max-w-[480px] mx-auto font-power-grotesk">
+    <motion.div 
+      className="w-full max-w-[480px] mx-auto font-power-grotesk"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* 切换滑块 */}
-      <div className="bg-[#F7F8F5] rounded-full p-[5px] flex mb-4 relative h-12">
+      <motion.div 
+        className="bg-[#F7F8F5] rounded-full p-[5px] flex mb-4 relative h-12"
+        variants={itemVariants}
+      >
         <div 
           className={`absolute w-[calc(50%-10px)] h-[calc(100%-10px)] bg-white rounded-full transition-transform duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.06)] ${
             activeTab === 'unstake' ? 'translate-x-[calc(100%+10px)]' : 'translate-x-0'
@@ -201,10 +234,13 @@ export default function StakeView() {
         >
           Unstake
         </button>
-      </div>
+      </motion.div>
 
       {/* 主要内容区域 */}
-      <div className="bg-[#F7F8F5] rounded-3xl p-6 h-[266px] flex flex-col justify-between mb-4 overflow-hidden">
+      <motion.div 
+        className="bg-[#F7F8F5] rounded-3xl p-6 h-[266px] flex flex-col justify-between mb-4 overflow-hidden"
+        variants={itemVariants}
+      >
         {/* 顶部代币输入区域 */}
         <div className={topTokenClasses}>
           <div className="flex justify-between items-center mb-3">
@@ -217,9 +253,16 @@ export default function StakeView() {
                   width={18}
                   height={18}
                 />
-                <span className="text-sm text-[#929796] font-normal font-power-grotesk">{topToken.balance.toFixed(2)} {topToken.symbol}</span>
+                <span className="text-sm text-[#929796] font-normal font-power-grotesk">
+                  Balance: {topToken.balance.toFixed(4)} {topToken.symbol}
+                </span>
                 <div className="w-[1px] h-[14px] bg-[#ECEDEA] mx-2"></div>
-                <span className="text-sm text-[#212121] font-normal cursor-pointer hover:opacity-80 font-power-grotesk" onClick={handleMaxClick}>Max</span>
+                <span 
+                  className="text-sm text-[#212121] font-normal cursor-pointer hover:opacity-80 font-power-grotesk" 
+                  onClick={handleMaxClick}
+                >
+                  Max
+                </span>
               </div>
             )}
           </div>
@@ -239,11 +282,10 @@ export default function StakeView() {
                 value={inputAmount}
                 onChange={(e) => handleInputChange(e.target.value)}
                 placeholder="0.00"
-                disabled={!isMockConnected}
                 className={`text-[26px] leading-none ${inputAmount ? 'text-[#212121]' : 'text-[#929796]'} font-normal bg-transparent text-right w-[140px] focus:outline-none placeholder-[#929796] font-power-grotesk`}
               />
               <div className="text-sm text-[#929796] mt-1 font-normal font-power-grotesk">
-                {calculateUsdValue(inputAmount, topToken.symbol === 'LSOL')}
+                {calculateUsdValue(inputAmount, false)}
               </div>
             </div>
           </div>
@@ -271,10 +313,23 @@ export default function StakeView() {
           <div className="flex-1 h-px bg-[#ECEDEA]" />
         </div>
 
-        {/* 底部代币输入区域 */}
+        {/* 底部代币输出区域 */}
         <div className={bottomTokenClasses}>
           <div className="flex justify-between items-center mb-3">
-            <div className="text-sm text-[#929796] font-normal font-power-grotesk">Receive</div>
+            <div className="text-sm text-[#929796] font-normal font-power-grotesk">You receive</div>
+            {isMockConnected && (
+              <div className="flex items-center gap-[3px]">
+                <Image
+                  src="/stake/assets/tokens/wallet.svg"
+                  alt="Balance"
+                  width={18}
+                  height={18}
+                />
+                <span className="text-sm text-[#929796] font-normal font-power-grotesk">
+                  Balance: {bottomToken.balance.toFixed(4)} {bottomToken.symbol}
+                </span>
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -291,44 +346,39 @@ export default function StakeView() {
                 {outputAmount || '0.00'}
               </div>
               <div className="text-sm text-[#929796] mt-1 font-normal font-power-grotesk">
-                {calculateUsdValue(outputAmount, bottomToken.symbol === 'LSOL')}
+                {calculateUsdValue(outputAmount, true)}
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* 兑换比率 */}
-      <div className="flex justify-between items-center mb-6">
+      <motion.div 
+        className="flex justify-between items-center mb-6"
+        variants={itemVariants}
+      >
         <span className="text-[14px] font-light text-[#636161] font-power-grotesk">Exchange rate</span>
         <span className="text-[14px] font-light text-[#636161] font-power-grotesk">1 SOL = 1.030487323 LSOL</span>
-      </div>
+      </motion.div>
 
       {/* 底部按钮区域 */}
-      <div className="w-full">
-        {!isMockConnected ? (
-          <ConnectKitButton.Custom>
-            {({ show }) => (
-              <button
-                onClick={() => {
-                  if (show) show();
-                  handleConnect();
-                }}
-                className={`w-full h-[48px] rounded-full text-base font-medium transition-all text-[#212121] font-power-grotesk ${buttonState.className}`}
-              >
-                {buttonState.text}
-              </button>
-            )}
-          </ConnectKitButton.Custom>
-        ) : (
-          <button
-            disabled={buttonState.disabled}
-            className={`w-full h-[48px] rounded-full text-base font-medium transition-all text-[#212121] font-power-grotesk ${buttonState.className}`}
-          >
-            {buttonState.text}
-          </button>
-        )}
-      </div>
-    </div>
+      <motion.div 
+        className="w-full"
+        variants={itemVariants}
+      >
+        <ConnectKitButton.Custom>
+          {({ isConnected, show }) => (
+            <button
+              onClick={isConnected ? undefined : show}
+              disabled={buttonState.disabled}
+              className={`w-full h-[48px] rounded-full text-base font-medium transition-all text-[#212121] font-power-grotesk ${buttonState.className}`}
+            >
+              {buttonState.text}
+            </button>
+          )}
+        </ConnectKitButton.Custom>
+      </motion.div>
+    </motion.div>
   );
 } 

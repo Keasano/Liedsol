@@ -1,7 +1,5 @@
-'use client';
-
-import NotFound from './not-found';
+import { redirect } from 'next/navigation';
 
 export default function DocsPage() {
-  return <NotFound />;
+  redirect('/docs/introduction');
 } 

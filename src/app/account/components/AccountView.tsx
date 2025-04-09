@@ -4,10 +4,53 @@ import { useEffect } from 'react';
 import { useWalletState } from '@/store/useWalletState';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+
+// 动画变体
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut"
+    }
+  }
+};
 
 export default function AccountView() {
   const router = useRouter();
   const { isMockConnected, mockAddress } = useWalletState();
+
+  // 创建动画数值
+  const tvlCount = useMotionValue(0);
+  const lsolCount = useMotionValue(0);
+  const stakedCount = useMotionValue(0);
+
+  const tvlDisplay = useTransform(tvlCount, value => value.toFixed(2));
+  const lsolDisplay = useTransform(lsolCount, value => value.toFixed(2));
+  const stakedDisplay = useTransform(stakedCount, value => value.toFixed(2));
+
+  useEffect(() => {
+    if (isMockConnected) {
+      // 动画过渡到目标值
+      animate(tvlCount, 0, { duration: 2 });
+      animate(lsolCount, 0, { duration: 2 });
+      animate(stakedCount, 1032.91, { duration: 2 });
+    }
+  }, [isMockConnected]);
 
   // 模拟数据
   const transactions = [
@@ -23,52 +66,82 @@ export default function AccountView() {
   // 如果未连接钱包，显示空状态
   if (!isMockConnected) {
     return (
-      <div className="h-[calc(100vh-144px)] flex flex-col items-center justify-center">
-        <Image
-          src="/account/assets/empty-wallet.svg"
-          alt="Empty wallet state"
-          width={160}
-          height={160}
-          className="mb-8"
-        />
-        <p className="text-[16px] text-[#212121] mb-8">
+      <motion.div 
+        className="h-[calc(100vh-144px)] flex flex-col items-center justify-center"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div variants={itemVariants}>
+          <Image
+            src="/account/assets/empty-wallet.svg"
+            alt="Empty wallet state"
+            width={160}
+            height={160}
+            className="mb-8"
+          />
+        </motion.div>
+        <motion.p 
+          variants={itemVariants}
+          className="text-[16px] text-[#212121] mb-8"
+        >
           Please connect a wallet first
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     );
   }
 
   return (
-    <div className="h-[calc(100vh-144px)] flex flex-col">
+    <motion.div 
+      className="h-[calc(100vh-144px)] flex flex-col"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* 数据组 */}
-      <div className="flex justify-center items-center gap-12 mb-10">
-        <div className="text-center">
-          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">0</div>
+      <motion.div 
+        className="flex justify-center items-center gap-12 mb-10"
+        variants={itemVariants}
+      >
+        <motion.div className="text-center" variants={itemVariants}>
+          <motion.div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">{tvlDisplay}</motion.div>
           <div className="text-[14px] font-light text-[#636161]">MY TVL</div>
-        </div>
+        </motion.div>
 
         {/* 绿色小方块 */}
-        <div className="w-2 h-2 bg-[#A8EC8F] mt-[-20px]" />
+        <motion.div 
+          className="w-2 h-2 bg-[#A8EC8F] mt-[-20px]" 
+          variants={itemVariants}
+        />
 
-        <div className="text-center">
-          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">0</div>
+        <motion.div className="text-center" variants={itemVariants}>
+          <motion.div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">{lsolDisplay}</motion.div>
           <div className="text-[14px] font-light text-[#636161]">MY LSOL</div>
-        </div>
+        </motion.div>
 
         {/* 绿色小方块 */}
-        <div className="w-2 h-2 bg-[#A8EC8F] mt-[-20px]" />
+        <motion.div 
+          className="w-2 h-2 bg-[#A8EC8F] mt-[-20px]" 
+          variants={itemVariants}
+        />
 
-        <div className="text-center">
-          <div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">1032.91</div>
+        <motion.div className="text-center" variants={itemVariants}>
+          <motion.div className="text-[28px] leading-none mb-1.5 font-bold text-[#212121]">{stakedDisplay}</motion.div>
           <div className="text-[14px] font-light text-[#636161]">TOTAL SOL STAKED</div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* 活动记录表格 */}
-      <div className="flex-1 bg-white rounded-[24px] border border-[#EFF0ED] p-4">
-        <div className="overflow-x-auto">
+      <motion.div 
+        className="flex-1 bg-white rounded-[24px] border border-[#EFF0ED] p-4"
+        variants={itemVariants}
+      >
+        <motion.div 
+          className="overflow-x-auto"
+          variants={itemVariants}
+        >
           <table className="w-full">
-            <thead>
+            <motion.thead variants={itemVariants}>
               <tr>
                 <th className="text-left py-4 px-6 text-[16px] font-bold bg-[#F7F8F5] rounded-l-[16px]">Time</th>
                 <th className="text-left py-4 px-6 text-[16px] font-bold bg-[#F7F8F5]">Actions</th>
@@ -76,12 +149,13 @@ export default function AccountView() {
                 <th className="text-left py-4 px-6 text-[16px] font-bold bg-[#F7F8F5]">Status</th>
                 <th className="text-left py-4 px-6 text-[16px] font-bold bg-[#F7F8F5] rounded-r-[16px]">Tx hash</th>
               </tr>
-            </thead>
-            <tbody>
+            </motion.thead>
+            <motion.tbody variants={itemVariants}>
               {transactions.map((tx, index) => (
-                <tr 
+                <motion.tr 
                   key={tx.hash}
                   className={transactions.length > 1 && index !== transactions.length - 1 ? 'border-b border-[#F0F0EB]' : ''}
+                  variants={itemVariants}
                 >
                   <td className="text-left py-4 px-6 text-[14px]">{tx.time}</td>
                   <td className="text-left py-4 px-6 text-[14px]">{tx.action}</td>
@@ -113,12 +187,12 @@ export default function AccountView() {
                       </div>
                     </div>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
-            </tbody>
+            </motion.tbody>
           </table>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 } 

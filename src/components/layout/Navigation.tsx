@@ -3,14 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Web3Layout } from '@/components/Web3Layout';
+import { ConnectKitButton } from 'connectkit';
 
 const navigationLinks = [
   { name: 'Home', href: '/' },
   { name: 'Stake', href: '/stake' },
   { name: 'My account', href: '/account' },
   { name: 'Defi', href: '/defi' },
-  { name: 'Docs', href: '/docs' },
+  { name: 'Docs', href: '/docs/introduction' },
 ];
 
 export function Navigation() {
@@ -56,7 +56,22 @@ export function Navigation() {
 
         {/* Connect Wallet Button */}
         <div className="relative">
-          <Web3Layout className="bg-[#F0F0EB] text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk" />
+          <ConnectKitButton.Custom>
+            {({ isConnected, show, address, ensName }) => {
+              const displayAddress = ensName || (address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '');
+              
+              return (
+                <button
+                  onClick={show}
+                  className={`${
+                    isConnected ? 'bg-[#F0F0EB]' : 'bg-[#A8EC8F]'
+                  } text-[#212121] px-4 h-9 flex items-center justify-center rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk`}
+                >
+                  {isConnected ? displayAddress : 'Connect Wallet'}
+                </button>
+              );
+            }}
+          </ConnectKitButton.Custom>
         </div>
       </nav>
     </div>
