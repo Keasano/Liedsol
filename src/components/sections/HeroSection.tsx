@@ -1,8 +1,25 @@
 'use client';
 
 import { AnimatedText } from '../ui/AnimatedText';
+import { useAccount } from 'wagmi';
+import { useModal } from 'connectkit';
+import { useRouter } from 'next/navigation';
 
 export const HeroSection = () => {
+  const { isConnected } = useAccount();
+  const { setOpen } = useModal();
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (!isConnected) {
+      // 如果未连接，打开连接钱包模态框
+      setOpen(true);
+    } else {
+      // 如果已连接，跳转到 /stake 页面
+      router.push('/stake');
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center font-power-grotesk w-full overflow-hidden">
       {/* Decorative images */}
@@ -55,7 +72,10 @@ export const HeroSection = () => {
           initial={true}
           delay={300}
         >
-          <button className="bg-[#A8EC8F] text-[#212121] px-8 h-11 rounded-full hover:opacity-90 transition-opacity font-medium text-[14px]">
+          <button 
+            onClick={handleClick} 
+            className="bg-[#A8EC8F] text-[#212121] px-8 h-11 rounded-full hover:opacity-90 transition-opacity font-medium text-[14px]"
+          >
             Deposit SOL
           </button>
         </AnimatedText>

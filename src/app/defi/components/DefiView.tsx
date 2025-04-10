@@ -20,14 +20,24 @@ interface StrategyCardProps {
 }
 
 const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, features, action, delay = 0 }) => {
+  // Helper function to shorten the address
+  const shortAddress = (addr: string) => `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+
   return (
     <AnimatedCard delay={delay}>
       <div className="bg-[#F7F8F5] rounded-[24px] px-6 pt-6 w-[360px] h-[300px] flex flex-col font-power-grotesk">
         <div className="flex items-center gap-3 mb-5">
           <Image src={icon} alt="" width={40} height={40} />
           <div>
-            <h3 className="text-[16px] font-bold text-[#212121]">{title}</h3>
-            <p className="text-[14px] text-[#929796] font-normal">{address}</p>
+            <h3 className="text-[16px] font-medium text-[#212121]">{title}</h3>
+            <a 
+              href={`https://solscan.io/account/${address}`}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[14px] text-[#929796] font-normal hover:text-opacity-80 transition-opacity"
+            >
+              {shortAddress(address)}
+            </a>
           </div>
         </div>
 
@@ -69,7 +79,7 @@ export default function DefiView() {
     {
       icon: '/defi/assets/kamino.svg',
       title: 'Vault Strategy on Kamino',
-      address: '6GGY...zcm7',
+      address: 'B7HWrvT...VP2r',
       features: {
         solayerRewards: true,
         openSource: true,
@@ -83,7 +93,7 @@ export default function DefiView() {
     {
       icon: '/defi/assets/orca.svg',
       title: 'Provide liquidity on Orca',
-      address: '6GGY...zcm7',
+      address: '8X5trvT...tD1T',
       features: {
         solayerRewards: true,
         openSource: true,
@@ -91,13 +101,13 @@ export default function DefiView() {
       },
       action: {
         icon: '/defi/assets/lsol.svg',
-        text: 'Supply LSOL'
+        text: 'Add LSOL Liquidity'
       }
     },
     {
       icon: '/defi/assets/sanctum.svg',
       title: 'Liquid Staking on Sanctum',
-      address: '6GGY...zcm7',
+      address: '7ED1rvT...PJh2',
       features: {
         solayerRewards: true,
         openSource: true,
@@ -110,8 +120,8 @@ export default function DefiView() {
     },
     {
       icon: '/defi/assets/allstake.svg',
-      title: 'Allstake',
-      address: '6GGY...zcm7',
+      title: 'Restaking on Allstake',
+      address: 'MFv2rvT...VacA',
       features: {
         solayerRewards: true,
         openSource: true,
@@ -119,7 +129,7 @@ export default function DefiView() {
       },
       action: {
         icon: '/defi/assets/lsol.svg',
-        text: 'Leveraged LSOL Restaking'
+        text: 'Leveraged Restaking'
       }
     }
   ];

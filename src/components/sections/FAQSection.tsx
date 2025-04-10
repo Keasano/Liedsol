@@ -33,7 +33,7 @@ const FAQItem = ({ number, question, answer, isOpen, onClick }: FAQItemProps) =>
           <h3 className="text-[#212121] text-xl font-medium">
             {question}
           </h3>
-          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className={`overflow-hidden transition-[max-height] duration-400 ease-out transition-opacity duration-300 ease-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
             <div className="pt-4">
               <p className="text-[#636161] whitespace-pre-wrap font-light">{answer}</p>
             </div>
