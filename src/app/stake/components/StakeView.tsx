@@ -254,11 +254,11 @@ export default function StakeView() {
                   height={18}
                 />
                 <span className="text-sm text-[#929796] font-normal font-power-grotesk">
-                  Balance: {topToken.balance.toFixed(4)} {topToken.symbol}
+                  {topToken.balance.toFixed(4)}
                 </span>
                 <div className="w-[1px] h-[14px] bg-[#ECEDEA] mx-2"></div>
-                <span 
-                  className="text-sm text-[#212121] font-normal cursor-pointer hover:opacity-80 font-power-grotesk" 
+                <span
+                  className="text-sm text-[#212121] font-normal cursor-pointer hover:opacity-80 font-power-grotesk"
                   onClick={handleMaxClick}
                 >
                   Max
@@ -285,7 +285,7 @@ export default function StakeView() {
                 className={`text-[26px] leading-none ${inputAmount ? 'text-[#212121]' : 'text-[#929796]'} font-normal bg-transparent text-right w-[140px] focus:outline-none placeholder-[#929796] font-power-grotesk`}
               />
               <div className="text-sm text-[#929796] mt-1 font-normal font-power-grotesk">
-                {calculateUsdValue(inputAmount, false)}
+                {calculateUsdValue(inputAmount, topToken.symbol === 'LSOL')}
               </div>
             </div>
           </div>
@@ -293,10 +293,7 @@ export default function StakeView() {
 
         {/* 分割线和转换图标 */}
         <div className="relative flex items-center">
-          {/* 左侧分割线 */}
           <div className="flex-1 h-px bg-[#ECEDEA]" />
-          
-          {/* 转换图标 */}
           <button 
             onClick={() => handleTabChange(activeTab === 'stake' ? 'unstake' : 'stake')}
             className="mx-[18px] hover:opacity-80 transition-opacity"
@@ -308,28 +305,13 @@ export default function StakeView() {
               height={32}
             />
           </button>
-          
-          {/* 右侧分割线 */}
           <div className="flex-1 h-px bg-[#ECEDEA]" />
         </div>
 
         {/* 底部代币输出区域 */}
         <div className={bottomTokenClasses}>
           <div className="flex justify-between items-center mb-3">
-            <div className="text-sm text-[#929796] font-normal font-power-grotesk">You receive</div>
-            {isMockConnected && (
-              <div className="flex items-center gap-[3px]">
-                <Image
-                  src="/stake/assets/tokens/wallet.svg"
-                  alt="Balance"
-                  width={18}
-                  height={18}
-                />
-                <span className="text-sm text-[#929796] font-normal font-power-grotesk">
-                  Balance: {bottomToken.balance.toFixed(4)} {bottomToken.symbol}
-                </span>
-              </div>
-            )}
+            <div className="text-sm text-[#929796] font-normal font-power-grotesk">Receive</div>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -346,14 +328,14 @@ export default function StakeView() {
                 {outputAmount || '0.00'}
               </div>
               <div className="text-sm text-[#929796] mt-1 font-normal font-power-grotesk">
-                {calculateUsdValue(outputAmount, true)}
+                {calculateUsdValue(outputAmount, bottomToken.symbol === 'LSOL')}
               </div>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* 兑换比率 */}
+      {/* 汇率信息 */}
       <motion.div 
         className="flex justify-between items-center mb-6"
         variants={itemVariants}

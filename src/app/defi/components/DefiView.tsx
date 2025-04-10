@@ -23,15 +23,15 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
   return (
     <AnimatedCard delay={delay}>
       <div className="bg-[#F7F8F5] rounded-[24px] px-6 pt-6 w-[360px] h-[300px] flex flex-col font-power-grotesk">
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-5">
           <Image src={icon} alt="" width={40} height={40} />
           <div>
             <h3 className="text-[16px] font-bold text-[#212121]">{title}</h3>
-            <p className="text-[14px] text-[#636161]">{address}</p>
+            <p className="text-[14px] text-[#929796] font-normal">{address}</p>
           </div>
         </div>
 
-        <div className="h-[1px] bg-[#ECEDEA] mb-6" />
+        <div className="h-[1px] bg-[#ECEDEA] mb-5" />
 
         <div className="space-y-4 mb-auto">
           <div className="flex justify-between">

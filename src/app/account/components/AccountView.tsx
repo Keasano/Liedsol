@@ -158,7 +158,7 @@ export default function AccountView() {
     >
       {/* 数据组 */}
       <motion.div 
-        className="flex justify-center items-center gap-[24px] mb-[56px] w-full mx-auto"
+        className="flex justify-center items-center gap-[24px] mb-[32px] w-full mx-auto"
         variants={itemVariants}
       >
         {/* MY TVL */}
@@ -244,7 +244,7 @@ export default function AccountView() {
         variants={itemVariants}
       >
         <motion.div 
-          className="overflow-x-auto"
+          className="overflow-x-auto scrollbar-hide"
           variants={itemVariants}
         >
           <table className="w-full">

@@ -4,6 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ConnectKitButton, Avatar } from 'connectkit';
+import { useAccount } from 'wagmi';
+import { useEffect } from 'react';
+import { useWalletState } from '@/store/useWalletState';
 
 const navigationLinks = [
   { name: 'Home', href: '/' },
@@ -15,6 +18,13 @@ const navigationLinks = [
 
 export function Navigation() {
   const pathname = usePathname();
+  const { isConnected } = useAccount();
+  const { setMockConnected } = useWalletState();
+
+  // Sync wagmi connection state with Zustand mock state (both connect and disconnect)
+  useEffect(() => {
+    setMockConnected(isConnected);
+  }, [isConnected, setMockConnected]);
 
   // 检查当前路径是否以某个链接开头
   const isActiveLink = (href: string) => {
@@ -63,7 +73,7 @@ export function Navigation() {
                   onClick={show}
                   className={`${
                     isConnected ? 'bg-[#F0F0EB]' : 'bg-[#A8EC8F]'
-                  } text-[#212121] px-3 py-[10px] flex items-center justify-center gap-2 rounded-full text-[14px] font-mono hover:opacity-90 transition-opacity font-power-grotesk`}
+                  } text-[#212121] px-4 py-[10px] flex items-center justify-center gap-2 rounded-full text-[14px] font-normal hover:opacity-90 transition-opacity font-power-grotesk`}
                 >
                   {isConnected ? (
                     <>

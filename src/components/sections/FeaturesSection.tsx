@@ -26,7 +26,7 @@ const features = [
 export const FeaturesSection = () => {
   return (
     <section className="w-full bg-[#121212] py-[150px]">
-      <div className="max-w-[1200px] mx-auto px-4">
+      <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-3 gap-4">
           {features.map((feature, index) => (
             <AnimatedText 

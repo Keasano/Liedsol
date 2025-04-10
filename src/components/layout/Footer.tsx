@@ -29,7 +29,7 @@ const socialLinks = [
 export const Footer = () => {
   return (
     <footer className="w-full bg-[#F4F4F4] pt-16 pb-12">
-      <div className="max-w-[1200px] mx-auto px-4">
+      <div className="max-w-[1200px] mx-auto">
         <div className="flex justify-between mb-20">
           {/* Brand section */}
           <div className="max-w-[480px] pt-[3px]">

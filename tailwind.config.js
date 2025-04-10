@@ -62,8 +62,8 @@ module.exports = {
           '100%': { transform: 'translate(-50%, -50%) rotate(-360deg)' },
         },
         spinRight: {
-          '0%': { transform: 'translateY(-50%) rotate(0deg)' },
-          '100%': { transform: 'translateY(-50%) rotate(360deg)' },
+          '0%': { transform: 'translate(50%, -50%) rotate(0deg)' },
+          '100%': { transform: 'translate(50%, -50%) rotate(360deg)' },
         },
         fadeInUp: {
           '0%': {

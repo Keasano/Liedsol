@@ -33,7 +33,7 @@ const FAQItem = ({ number, question, answer, isOpen, onClick }: FAQItemProps) =>
           <h3 className="text-[#212121] text-xl font-medium">
             {question}
           </h3>
-          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 h-auto' : 'opacity-0 h-0'}`}>
+          <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
             <div className="pt-4">
               <p className="text-[#636161] whitespace-pre-wrap font-light">{answer}</p>
             </div>
@@ -117,7 +117,7 @@ export const FAQSection = () => {
 
   return (
     <section className="pt-[150px]">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div ref={titleRef} className="text-center mb-12">
           <p className="text-[#636161] text-[14px] font-normal mb-4">FAQs</p>
           <h2 className="text-4xl font-bold text-[#212121]">

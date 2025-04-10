@@ -4,25 +4,25 @@ import { AnimatedText } from '../ui/AnimatedText';
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center font-power-grotesk">
+    <section className="relative min-h-screen flex items-center font-power-grotesk w-full overflow-hidden">
       {/* Decorative images */}
       <div className="absolute inset-0 overflow-visible pointer-events-none">
-        {/* Left decorative image */}
+        {/* Left decorative image - Reverted to original working style */}
         <img
           src="/images/hero-left.png"
           alt=""
           className="absolute left-0 top-1/2 w-[343px] -translate-y-1/2 animate-spin-left"
         />
-        {/* Right decorative image */}
+        {/* Right decorative image - Adjusted to mirror the left side's logic */}
         <img
           src="/images/hero-right.png"
           alt=""
-          className="absolute right-[-171.5px] top-1/2 w-[343px] -translate-y-1/2 animate-spin-right"
+          className="absolute right-0 top-1/2 w-[343px] -translate-y-1/2 animate-spin-right"
         />
       </div>
 
       {/* Main content */}
-      <div className="max-w-[800px] mx-auto px-4 text-center mt-9 relative">
+      <div className="max-w-[800px] mx-auto px-4 text-center mt-9 relative w-full">
         {/* Background pattern */}
         <img 
           src="/images/hero-pattern.svg"

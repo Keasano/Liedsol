@@ -72,7 +72,7 @@ export const ProcessSection = () => {
 
   return (
     <section ref={sectionRef} className="py-[150px] bg-[#F7F7F7] font-power-grotesk relative">
-      <div className="max-w-[1200px] mx-auto px-4 overflow-hidden">
+      <div className="max-w-[1200px] mx-auto overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:gap-20 gap-10">
           {/* Left content */}
           <div className="flex-1 min-w-0 flex flex-col justify-between">

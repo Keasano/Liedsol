@@ -37,7 +37,7 @@ export default function RootLayout({
         <Providers>
           <div className="relative min-h-screen">
             <ClientLayout>
-              <main className="relative w-full max-w-[1440px] mx-auto px-4">
+              <main className="relative w-full">
                 {children}
               </main>
             </ClientLayout>
