@@ -58,7 +58,7 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
           </div>
         </div>
 
-        <button className="w-full h-[48px] flex items-center justify-between bg-white rounded-full pl-[6px] pr-[14px] relative mb-[24px]">
+        <button className="group w-full h-[48px] flex items-center justify-between bg-white rounded-full pl-[6px] pr-[14px] relative mb-[24px] transition-all duration-300 hover:bg-[#f8f8f8] hover:shadow-md hover:transform hover:scale-[1.02]">
           <div className="flex items-center gap-2">
             <div className="py-[6px]">
               <Image src="/defi/assets/lsol.svg" alt="" width={36} height={36} />
@@ -66,7 +66,7 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
             <span className="text-[14px] text-[#212121]">{action.text}</span>
           </div>
           <div className="py-[14px]">
-            <Image src="/defi/assets/arrow.svg" alt="" width={20} height={20} />
+            <Image src="/defi/assets/arrow.svg" alt="" width={20} height={20} className="transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </button>
       </div>
