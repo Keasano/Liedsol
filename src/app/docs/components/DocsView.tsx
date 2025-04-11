@@ -40,6 +40,8 @@ const navItems = [
 export default function DocsView({ children }: DocsViewProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [sidebarOverflow, setSidebarOverflow] = useState<string>('overflow-y-auto');
+  const [contentOverflow, setContentOverflow] = useState<string>('overflow-y-auto');
 
   // 预加载所有文档页面
   useEffect(() => {
@@ -57,12 +59,46 @@ export default function DocsView({ children }: DocsViewProps) {
     }
   }, [pathname, router]);
 
+  // 检测内容高度并设置滚动条
+  useEffect(() => {
+    const checkContentHeight = () => {
+      // 侧边栏检测
+      const sidebarNav = document.querySelector('.docs-sidebar-nav');
+      const sidebarContainer = document.querySelector('.docs-sidebar-container');
+      if (sidebarNav && sidebarContainer) {
+        const sidebarHeight = sidebarNav.scrollHeight;
+        const sidebarContainerHeight = (sidebarContainer as HTMLElement).clientHeight;
+        // 减去底部留白高度200px
+        setSidebarOverflow(sidebarHeight - 200 > sidebarContainerHeight ? 'overflow-y-auto' : 'overflow-y-hidden');
+      }
+
+      // 主内容区检测
+      const contentArea = document.querySelector('.docs-content-area');
+      const contentContainer = document.querySelector('.docs-content-container');
+      if (contentArea && contentContainer) {
+        const contentHeight = contentArea.scrollHeight;
+        const contentContainerHeight = (contentContainer as HTMLElement).clientHeight;
+        // 减去底部留白高度97px
+        setContentOverflow(contentHeight - 97 > contentContainerHeight ? 'overflow-y-auto' : 'overflow-y-hidden');
+      }
+    };
+    
+    // 初始检测
+    checkContentHeight();
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', checkContentHeight);
+    
+    // 清理函数
+    return () => window.removeEventListener('resize', checkContentHeight);
+  }, [pathname, children]); // 页面路径或内容变化时重新检测
+
   return (
     <div className="flex bg-white">
       {/* Left Sidebar */}
       <div className="w-[240px] shrink-0">
-        <div className="fixed w-[240px]">
-          <nav>
+        <div className={`docs-sidebar-container fixed w-[240px] h-screen ${sidebarOverflow} scrollbar-hide`}>
+          <nav className="docs-sidebar-nav pt-0 pb-[200px]">
             {navItems.map((section) => (
               <div key={section.category} className="mb-6">
                 <h3 className="px-4 mb-2 text-[14px] text-[#212121]">{section.category}</h3>
@@ -111,8 +147,10 @@ export default function DocsView({ children }: DocsViewProps) {
 
       {/* Main Content */}
       <div className="flex-1 min-w-0 pl-8">
-        <div className="max-w-[560px]">
-          {children}
+        <div className={`docs-content-container max-w-[560px] fixed h-[calc(100vh-136px)] top-[136px] ${contentOverflow} scrollbar-hide pr-8`}>
+          <div className="docs-content-area pb-[97px]">
+            {children}
+          </div>
         </div>
       </div>
     </div>
