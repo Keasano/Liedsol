@@ -14,25 +14,25 @@ const navItems = [
   { 
     category: 'Overview',
     items: [
-      { name: 'Introduction', icon: '/docs/assets/introduction.svg', href: '/docs/introduction' },
-      { name: 'LSOL', icon: '/docs/assets/lsol.svg', href: '/docs/lsol' },
-      { name: 'Fees', icon: '/docs/assets/fees.svg', href: '/docs/fees' },
+      { name: 'Introduction', icon: '/docs/assets/Introduction.svg', href: '/docs/introduction' },
+      { name: 'LSOL', icon: '/docs/assets/LSOL.svg', href: '/docs/lsol' },
+      { name: 'Fees', icon: '/docs/assets/Fees.svg', href: '/docs/fees' },
     ]
   },
   {
     category: 'Staking',
     items: [
-      { name: 'Liquid staking', icon: '/docs/assets/liquid-staking.svg', href: '/docs/liquid-staking' },
-      { name: 'Staking APY', icon: '/docs/assets/staking-apy.svg', href: '/docs/staking-apy' },
-      { name: 'Risks', icon: '/docs/assets/risks.svg', href: '/docs/risks' },
+      { name: 'Liquid staking', icon: '/docs/assets/Liquid-staking.svg', href: '/docs/liquid-staking' },
+      { name: 'Staking APY', icon: '/docs/assets/Staking-APY.svg', href: '/docs/staking-apy' },
+      { name: 'Risks', icon: '/docs/assets/Risks.svg', href: '/docs/risks' },
     ]
   },
   {
     category: 'Support',
     items: [
-      { name: 'FAQ', icon: '/docs/assets/faq.svg', href: '/docs/faq' },
-      { name: 'Contact us', icon: '/docs/assets/contact-us.svg', href: '/docs/contact' },
-      { name: 'Delegation Strategy', icon: '/docs/assets/delegation-strategy.svg', href: '/docs/delegation-strategy' },
+      { name: 'FAQ', icon: '/docs/assets/FAQ.svg', href: '/docs/faq' },
+      { name: 'Contact us', icon: '/docs/assets/Contact-us.svg', href: '/docs/contact' },
+      { name: 'Delegation Strategy', icon: '/docs/assets/Delegation-Strategy.svg', href: '/docs/delegation-strategy' },
     ]
   }
 ];
