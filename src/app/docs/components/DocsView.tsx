@@ -68,8 +68,18 @@ export default function DocsView({ children }: DocsViewProps) {
       if (sidebarNav && sidebarContainer) {
         const sidebarHeight = sidebarNav.scrollHeight;
         const sidebarContainerHeight = (sidebarContainer as HTMLElement).clientHeight;
-        // 减去底部留白高度200px
-        setSidebarOverflow(sidebarHeight - 200 > sidebarContainerHeight ? 'overflow-y-auto' : 'overflow-y-hidden');
+        const needsScroll = sidebarHeight > sidebarContainerHeight - 172; // 减去底部留白高度172px (原200px减28px)
+        
+        // 始终保持overflow-y-auto以支持滚动，但根据条件添加/移除一个类来控制内容是否应该滚动
+        setSidebarOverflow(needsScroll ? 'overflow-y-auto' : 'overflow-y-auto max-h-fit');
+        
+        // 动态更新控制台日志，帮助调试
+        console.log('Sidebar Heights:', { 
+          sidebarHeight, 
+          containerHeight: sidebarContainerHeight, 
+          needsScroll,
+          overflow: needsScroll ? 'overflow-y-auto' : 'overflow-y-auto max-h-fit'
+        });
       }
 
       // 主内容区检测
@@ -78,13 +88,22 @@ export default function DocsView({ children }: DocsViewProps) {
       if (contentArea && contentContainer) {
         const contentHeight = contentArea.scrollHeight;
         const contentContainerHeight = (contentContainer as HTMLElement).clientHeight;
-        // 减去底部留白高度97px
-        setContentOverflow(contentHeight - 97 > contentContainerHeight ? 'overflow-y-auto' : 'overflow-y-hidden');
+        const needsScroll = contentHeight > contentContainerHeight - 69; // 减去底部留白高度69px (原97px减28px)
+        
+        setContentOverflow(needsScroll ? 'overflow-y-auto' : 'overflow-y-auto max-h-fit');
+        
+        // 动态更新控制台日志，帮助调试
+        console.log('Content Heights:', { 
+          contentHeight, 
+          containerHeight: contentContainerHeight, 
+          needsScroll,
+          overflow: needsScroll ? 'overflow-y-auto' : 'overflow-y-auto max-h-fit' 
+        });
       }
     };
     
-    // 初始检测
-    checkContentHeight();
+    // 初始检测可能需要延迟执行，确保DOM已完全渲染
+    setTimeout(checkContentHeight, 100);
     
     // 监听窗口大小变化
     window.addEventListener('resize', checkContentHeight);
@@ -98,7 +117,7 @@ export default function DocsView({ children }: DocsViewProps) {
       {/* Left Sidebar */}
       <div className="w-[240px] shrink-0">
         <div className={`docs-sidebar-container fixed w-[240px] h-screen ${sidebarOverflow} scrollbar-hide`}>
-          <nav className="docs-sidebar-nav pt-0 pb-[200px]">
+          <nav className="docs-sidebar-nav pt-0 pb-[172px]">
             {navItems.map((section) => (
               <div key={section.category} className="mb-6">
                 <h3 className="px-4 mb-2 text-[14px] text-[#212121]">{section.category}</h3>
@@ -148,7 +167,7 @@ export default function DocsView({ children }: DocsViewProps) {
       {/* Main Content */}
       <div className="flex-1 min-w-0 pl-8">
         <div className={`docs-content-container max-w-[560px] fixed h-[calc(100vh-136px)] top-[136px] ${contentOverflow} scrollbar-hide pr-8`}>
-          <div className="docs-content-area pb-[97px]">
+          <div className="docs-content-area pb-[69px]">
             {children}
           </div>
         </div>
