@@ -63,7 +63,7 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
             <div className="py-[6px]">
               <Image src="/defi/assets/lsol.svg" alt="" width={36} height={36} />
             </div>
-            <span className="text-[14px] text-[#212121]">{action.text}</span>
+            <span className="text-[14px] text-[#212121] transition-colors duration-300 group-hover:text-[#565656]">{action.text}</span>
           </div>
           <div className="py-[14px]">
             <Image src="/defi/assets/arrow.svg" alt="" width={20} height={20} className="transition-transform duration-300 group-hover:translate-x-1" />
