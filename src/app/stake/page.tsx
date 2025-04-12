@@ -35,7 +35,7 @@ export default function StakePage() {
   const { isConnected } = useAccount();
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen pt-[120px]">
       <div className="relative w-full max-w-7xl mx-auto px-4">
         {/* 左侧装饰 */}
         <div className="fixed left-0 top-0 -z-10">
@@ -61,7 +61,7 @@ export default function StakePage() {
 
         {/* APY 和 TVL */}
         <motion.div 
-          className="flex justify-center items-center gap-12 mb-6 mt-[120px]"
+          className="flex justify-center items-center gap-12 mb-6"
           variants={statsVariants}
           initial="hidden"
           animate="visible"
