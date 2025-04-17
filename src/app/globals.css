@@ -148,6 +148,7 @@ body {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
+/* 添加partners轮播样式 */
 @keyframes slide {
   0% {
     transform: translateX(0);
@@ -261,4 +262,65 @@ body.ck-overlay-open {
     transform: rotate(360deg);
   }
 }
+
+/* 移动端容器边距 */
+.mobile-container {
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+@media (min-width: 640px) {
+  .mobile-container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* 使用完全唯一的类名重新定义 */
+@keyframes partners-infinite-loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.liedsol-partners-wrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.liedsol-partners-track {
+  display: flex;
+  width: fit-content;
+  animation: partners-infinite-loop 20s linear infinite;
+  will-change: transform;
+}
+
+.liedsol-partner-item {
+  flex: 0 0 auto;
+  transform: translateZ(0);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* 移动端合作伙伴轮播速度调整 */
+@media (max-width: 768px) {
+  .partners-track {
+    animation-duration: 25s; /* 加快移动端滚动速度 */
+  }
+}
+
+
 

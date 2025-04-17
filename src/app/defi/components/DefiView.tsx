@@ -15,6 +15,7 @@ interface StrategyCardProps {
   action: {
     icon: string;
     text: string;
+    url: string;
   };
   delay?: number;
 }
@@ -58,7 +59,12 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
           </div>
         </div>
 
-        <button className="group w-full h-[48px] flex items-center justify-between bg-white rounded-full pl-[6px] pr-[14px] relative mb-[24px]">
+        <a 
+          href={action.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="group w-full h-[48px] flex items-center justify-between bg-white rounded-full pl-[6px] pr-[14px] relative mb-[24px]"
+        >
           <div className="flex items-center gap-2">
             <div className="py-[6px]">
               <Image src="/defi/assets/lsol.svg" alt="" width={36} height={36} />
@@ -68,7 +74,7 @@ const StrategyCard: React.FC<StrategyCardProps> = ({ icon, title, address, featu
           <div className="py-[14px]">
             <Image src="/defi/assets/arrow.svg" alt="" width={20} height={20} className="transition-transform duration-300 group-hover:translate-x-1" />
           </div>
-        </button>
+        </a>
       </div>
     </AnimatedCard>
   );
@@ -87,7 +93,8 @@ export default function DefiView() {
       },
       action: {
         icon: '/defi/assets/lsol.svg',
-        text: 'Supply LSOL'
+        text: 'Supply LSOL',
+        url: 'https://app.kamino.finance/'
       }
     },
     {
@@ -101,7 +108,8 @@ export default function DefiView() {
       },
       action: {
         icon: '/defi/assets/lsol.svg',
-        text: 'Add LSOL Liquidity'
+        text: 'Add LSOL Liquidity',
+        url: 'https://www.orca.so/'
       }
     },
     {
@@ -115,7 +123,8 @@ export default function DefiView() {
       },
       action: {
         icon: '/defi/assets/lsol.svg',
-        text: 'Supply LSOL'
+        text: 'Supply LSOL',
+        url: 'https://app.sanctum.so/'
       }
     },
     {
@@ -129,7 +138,8 @@ export default function DefiView() {
       },
       action: {
         icon: '/defi/assets/lsol.svg',
-        text: 'Leveraged Restaking'
+        text: 'Leveraged Restaking',
+        url: 'https://allstake.org/'
       }
     }
   ];

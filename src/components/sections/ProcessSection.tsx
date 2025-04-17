@@ -71,26 +71,26 @@ export const ProcessSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-[150px] bg-[#F7F7F7] font-power-grotesk relative">
-      <div className="max-w-[1200px] mx-auto overflow-hidden">
-        <div className="flex flex-col lg:flex-row lg:gap-20 gap-10">
+    <section ref={sectionRef} className="py-[60px] sm:py-[100px] md:py-[150px] bg-[#F7F7F7] font-power-grotesk relative">
+      <div className="mobile-container max-w-[1200px] mx-auto overflow-hidden">
+        <div className="flex flex-col lg:flex-row lg:gap-20 gap-8">
           {/* Left content */}
           <div className="flex-1 min-w-0 flex flex-col justify-between">
             <div>
-              <p className="text-[#929796] text-[16px] mb-4 font-light">Process</p>
-              <h2 className="text-[48px] leading-tight font-medium text-[#212121] mb-6">
+              <p className="text-[#929796] text-[14px] sm:text-[16px] mb-3 sm:mb-4 font-light">Process</p>
+              <h2 className="text-[32px] sm:text-[40px] md:text-[48px] leading-tight font-medium text-[#212121] mb-4 sm:mb-6">
                 The Simplest Way<br />
                 With Lied Sol<br />
                 STAKE SOL
               </h2>
             </div>
-            <div className="relative">
+            <div className="relative hidden sm:block">
               <Image 
                 src="/images/feature-swirl.png"
                 alt="Decorative swirl"
                 width={264}
                 height={264}
-                className="mt-8 animate-float"
+                className="mt-8 animate-float w-[180px] md:w-[220px] lg:w-[264px]"
               />
             </div>
           </div>
@@ -99,7 +99,7 @@ export const ProcessSection = () => {
           <div className="flex-1 relative min-w-0">
             <div className="flex">
               {/* Progress bar */}
-              <div className="w-[6px] bg-[#E8E8E8] relative mr-20">
+              <div className="w-[4px] sm:w-[6px] bg-[#E8E8E8] relative mr-4 sm:mr-10 md:mr-20">
                 <div 
                   className="w-full bg-[#A8EC8F] absolute top-0 bottom-0 transition-transform duration-300"
                   style={{
@@ -113,18 +113,18 @@ export const ProcessSection = () => {
               <div className="flex-1 min-w-0">
                 {/* Step 1 */}
                 <div ref={step1Ref} className="flex">
-                  <div className="w-[60px] text-center text-[60px] font-[800] italic text-[#A8EC8F] opacity-20 font-power-grotesk leading-none -mr-[11px] mt-[38px]">1</div>
+                  <div className="w-[40px] sm:w-[50px] md:w-[60px] text-center text-[40px] sm:text-[50px] md:text-[60px] font-[800] italic text-[#A8EC8F] opacity-20 font-power-grotesk leading-none -mr-[11px] mt-[25px] sm:mt-[32px] md:mt-[38px]">1</div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-col">
                       <Image 
                         src="/icons/menu.svg" 
                         alt="Menu icon" 
-                        width={32} 
-                        height={32}
-                        className="mb-4"
+                        width={24} 
+                        height={24}
+                        className="mb-3 sm:mb-4 w-[24px] sm:w-[28px] md:w-[32px]"
                       />
-                      <h3 className="text-[28px] font-medium text-[#212121] mb-2">Staking Solana</h3>
-                      <p className="text-[#636161] text-[16px] font-light">
+                      <h3 className="text-[20px] sm:text-[24px] md:text-[28px] font-medium text-[#212121] mb-1 sm:mb-2">Staking Solana</h3>
+                      <p className="text-[#636161] text-[14px] sm:text-[16px] font-light">
                         Deposit the amount of $Solana you wish to stake on LieSolx.
                       </p>
                     </div>
@@ -132,35 +132,35 @@ export const ProcessSection = () => {
                 </div>
 
                 {/* Step 2 */}
-                <div ref={step2Ref} className="flex mt-20">
-                  <div className="w-[60px] text-center text-[60px] font-[800] italic text-[#A8EC8F] opacity-20 font-power-grotesk leading-none -mr-[11px] mt-[38px]">2</div>
+                <div ref={step2Ref} className="flex mt-12 sm:mt-16 md:mt-20">
+                  <div className="w-[40px] sm:w-[50px] md:w-[60px] text-center text-[40px] sm:text-[50px] md:text-[60px] font-[800] italic text-[#A8EC8F] opacity-20 font-power-grotesk leading-none -mr-[11px] mt-[25px] sm:mt-[32px] md:mt-[38px]">2</div>
                   <div className="min-w-0 flex-1">
                     <Image 
                       src="/icons/receive.svg" 
                       alt="Receive icon" 
-                      width={32} 
-                      height={32}
-                      className="mb-4"
+                      width={24} 
+                      height={24}
+                      className="mb-3 sm:mb-4 w-[24px] sm:w-[28px] md:w-[32px]"
                     />
-                    <h3 className="text-[28px] font-medium text-[#212121] mb-2">Receive $LSOL</h3>
-                    <p className="text-[#636161] text-[16px] font-light">
+                    <h3 className="text-[20px] sm:text-[24px] md:text-[28px] font-medium text-[#212121] mb-1 sm:mb-2">Receive $LSOL</h3>
+                    <p className="text-[#636161] text-[14px] sm:text-[16px] font-light">
                       Receive $LSOL as a staking reward, which appreciates in value relative to $Sol after each epoch.
                     </p>
                   </div>
                 </div>
 
                 {/* Step 3 */}
-                <div ref={step3Ref} className="flex mt-20">
-                  <div className="w-[60px] text-center text-[60px] font-[800] italic text-[#A8EC8F] opacity-20 font-power-grotesk leading-none -mr-[11px] mt-[38px]">3</div>
+                <div ref={step3Ref} className="flex mt-12 sm:mt-16 md:mt-20">
+                  <div className="w-[40px] sm:w-[50px] md:w-[60px] text-center text-[40px] sm:text-[50px] md:text-[60px] font-[800] italic text-[#A8EC8F] opacity-20 font-power-grotesk leading-none -mr-[11px] mt-[25px] sm:mt-[32px] md:mt-[38px]">3</div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex -space-x-2 mb-4">
-                      <Image src="/partners/allstake.svg" alt="Allstake" width={36} height={36} />
-                      <Image src="/partners/kamino.svg" alt="Kamino" width={36} height={36} />
-                      <Image src="/partners/orca.svg" alt="Orca" width={36} height={36} />
-                      <Image src="/partners/sanctum.svg" alt="Sanctum" width={36} height={36} />
+                    <div className="flex -space-x-1 sm:-space-x-2 mb-3 sm:mb-4">
+                      <Image src="/partners/allstake.svg" alt="Allstake" width={28} height={28} className="w-[28px] sm:w-[32px] md:w-[36px]" />
+                      <Image src="/partners/kamino.svg" alt="Kamino" width={28} height={28} className="w-[28px] sm:w-[32px] md:w-[36px]" />
+                      <Image src="/partners/orca.svg" alt="Orca" width={28} height={28} className="w-[28px] sm:w-[32px] md:w-[36px]" />
+                      <Image src="/partners/sanctum.svg" alt="Sanctum" width={28} height={28} className="w-[28px] sm:w-[32px] md:w-[36px]" />
                     </div>
-                    <h3 className="text-[28px] font-medium text-[#212121] mb-2">Engage In DeFi</h3>
-                    <p className="text-[#636161] text-[16px] font-light">
+                    <h3 className="text-[20px] sm:text-[24px] md:text-[28px] font-medium text-[#212121] mb-1 sm:mb-2">Engage In DeFi</h3>
+                    <p className="text-[#636161] text-[14px] sm:text-[16px] font-light">
                       Use $LSOL in DeFi on Solana, or swap to $SOL anytime. Boost returns with extra DeFi yields atop staking rewards.
                     </p>
                   </div>
